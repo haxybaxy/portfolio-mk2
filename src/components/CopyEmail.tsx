@@ -32,33 +32,30 @@ function CopyEmail() {
       type="button"
       onClick={copy}
       aria-label="Copy email address"
-      className="flex cursor-pointer items-center gap-2 opacity-80 transition-opacity hover:opacity-100"
+      className="flex cursor-pointer items-center opacity-80 transition-opacity hover:opacity-100"
     >
-      {/* Both icons stacked; 24px matches their 24×24 grid so pixels stay crisp at rest */}
-      <span className="relative size-6 overflow-hidden" aria-hidden="true">
-        <Mail
-          width={24}
-          height={24}
-          shapeRendering="crispEdges"
-          className={`absolute inset-0 ${ICON_MOTION} ${copied ? 'translate-y-2 opacity-0' : ''}`}
-        />
-        <Check
-          width={24}
-          height={24}
-          shapeRendering="crispEdges"
-          className={`absolute inset-0 ${ICON_MOTION} ${copied ? 'delay-150' : '-translate-y-2 opacity-0'}`}
-        />
-      </span>
-
-      {/* Both labels share one grid cell, so the button keeps the email's width */}
-      <span className="grid overflow-hidden text-left" aria-hidden="true">
-        <span className={`[grid-area:1/1] ${TEXT_MOTION} ${copied ? 'translate-y-full opacity-0' : 'delay-100'}`}>
-          him[at]zaidalsaheb.com
+      {/* Both rows share one grid cell, so the button keeps the email row's width.
+          24px icons match their 24×24 grid so pixels stay crisp at rest. */}
+      <span className="grid overflow-hidden" aria-hidden="true">
+        <span className="flex items-center gap-2 [grid-area:1/1]">
+          <Mail
+            width={24}
+            height={24}
+            shapeRendering="crispEdges"
+            className={`${ICON_MOTION} ${copied ? 'translate-y-2 opacity-0' : ''}`}
+          />
+          <span className={`${TEXT_MOTION} ${copied ? 'translate-y-full opacity-0' : 'delay-100'}`}>
+            him[at]zaidalsaheb.com
+          </span>
         </span>
-        <span
-          className={`[grid-area:1/1] justify-self-center ${TEXT_MOTION} ${copied ? 'delay-100' : '-translate-y-full opacity-0'}`}
-        >
-          Copied!
+        <span className="flex items-center gap-2 justify-self-center [grid-area:1/1]">
+          <Check
+            width={24}
+            height={24}
+            shapeRendering="crispEdges"
+            className={`${ICON_MOTION} ${copied ? 'delay-150' : '-translate-y-2 opacity-0'}`}
+          />
+          <span className={`${TEXT_MOTION} ${copied ? 'delay-100' : '-translate-y-full opacity-0'}`}>Copied!</span>
         </span>
       </span>
 
