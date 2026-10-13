@@ -1,0 +1,5 @@
+function Blog() {
+  return <h1 className="text-[clamp(3rem,10vw,8rem)] font-bold tracking-tighter">Blog</h1>
+}
+
+export default Blog
