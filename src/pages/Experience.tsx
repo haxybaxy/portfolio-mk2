@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Icon from '../components/Icon'
 import TechChip from '../components/TechChip'
 import { jobs } from '../data/jobs'
@@ -6,32 +6,46 @@ import { projectSlug } from '../data/projects'
 import { skillCategories } from '../data/skills'
 import { LINK, MUTED, SECTION_TITLE } from '../surface'
 
-// Every role starts collapsed; the row shows dates, role and company
+// Every role starts collapsed; the row shows dates, role and company. Only the latest few show until "See more".
 const latestFirst = jobs.toReversed()
-
-/** Following a #job-<id> link also opens that role; the browser handles the scroll */
-function useOpenFromHash() {
-  useEffect(() => {
-    const openFromHash = () => {
-      const match = /^#(job-[\w-]+)$/.exec(window.location.hash)
-      const details = match && document.getElementById(match[1])?.querySelector('details')
-      if (details) details.open = true
-    }
-    openFromHash()
-    window.addEventListener('hashchange', openFromHash)
-    return () => window.removeEventListener('hashchange', openFromHash)
-  }, [])
-}
+const INITIAL_ROLES = 4
 
 function Experience() {
-  useOpenFromHash()
+  const [showAll, setShowAll] = useState(false)
+  const [focus, setFocus] = useState<string | null>(null)
+  const visible = showAll ? latestFirst : latestFirst.slice(0, INITIAL_ROLES)
+
+  // A #job-<id> link (e.g. from a project's "Built at") reveals the list if needed, then opens that role
+  useEffect(() => {
+    const readHash = () => {
+      const match = /^#job-([\w-]+)$/.exec(window.location.hash)
+      if (!match) return
+      if (latestFirst.findIndex((job) => job.id === match[1]) >= INITIAL_ROLES) setShowAll(true)
+      setFocus(match[1])
+    }
+    readHash()
+    window.addEventListener('hashchange', readHash)
+    return () => window.removeEventListener('hashchange', readHash)
+  }, [])
+
+  // Runs after the revealed rows exist in the DOM; each linked role is handled once
+  const handled = useRef<string | null>(null)
+  useEffect(() => {
+    if (!focus || handled.current === focus) return
+    const row = document.getElementById(`job-${focus}`)
+    const details = row?.querySelector('details')
+    if (!row || !details) return
+    details.open = true
+    row.scrollIntoView({ block: 'start' })
+    handled.current = focus
+  }, [focus, showAll])
 
   return (
     <div className="flex w-full max-w-3xl flex-col gap-10">
       <h2 className={SECTION_TITLE}>Experience</h2>
 
       <ol className="flex flex-col gap-6">
-        {latestFirst.map((job) => (
+        {visible.map((job) => (
           <li key={job.id} id={`job-${job.id}`} className="scroll-mt-28">
             <details className="group">
               <summary className="grid cursor-pointer list-none gap-x-8 gap-y-1 sm:grid-cols-[10rem_1fr] [&::-webkit-details-marker]:hidden">
@@ -73,6 +87,18 @@ function Experience() {
           </li>
         ))}
       </ol>
+
+      {latestFirst.length > INITIAL_ROLES && (
+        <button
+          type="button"
+          onClick={() => setShowAll((value) => !value)}
+          aria-expanded={showAll}
+          className={`inline-flex cursor-pointer items-center gap-2 self-start text-sm ${LINK}`}
+        >
+          {showAll ? 'See less' : `See ${latestFirst.length - INITIAL_ROLES} more`}
+          <Icon name="chevronDown" className={`size-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
+        </button>
+      )}
 
       <div className="flex flex-col gap-6 border-t border-fg/10 pt-10">
         {skillCategories.map((category) => (

@@ -1,8 +1,7 @@
 import CopiedToast from "../components/CopiedToast";
-import SocialLinks from "../components/SocialLinks";
 import { EMAIL } from "../contact";
 import { useCopyEmail } from "../hooks/useCopyEmail";
-import { LINK, MUTED, SECTION_TITLE } from "../surface";
+import { LINK, SECTION_TITLE } from "../surface";
 
 /** The address written out with [at], copied to the clipboard on click */
 function CopyEmailText() {
@@ -32,19 +31,15 @@ function Contact() {
       <h2 className={SECTION_TITLE}>Contact</h2>
 
       <div className="flex flex-col gap-5">
-        <p className="text-2xl font-bold tracking-tight md:text-3xl">Say hi.</p>
+        <p className="text-2xl font-bold tracking-tight md:text-3xl">
+          Want to work together?
+        </p>
         <p className="leading-relaxed opacity-80">
-          Work, collaborations, a strongly held opinion about tabs versus
-          spaces: all of it goes to my business email. Click it to copy.
+          If you need someone who can make things happen at any given moment,
+          <br />
+          send me an email at my business address.
         </p>
         <CopyEmailText />
-      </div>
-
-      <div className="flex flex-col gap-3">
-        <p className="opacity-80">
-          I read everything and reply to most of it. The koi handles the rest.
-        </p>
-        <SocialLinks />
       </div>
     </div>
   );
