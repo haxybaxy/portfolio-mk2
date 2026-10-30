@@ -1,12 +1,8 @@
-import Home from './pages/Home'
+import Profile from './pages/Profile'
 
-// Landing only for now: the other sections stay in src/pages but are not wired in on this branch
+// Single-column dev profile; the older section pages stay in src/pages but are not mounted on this branch
 function App() {
-  return (
-    <main className="grid min-h-svh place-items-center px-6 py-12">
-      <Home />
-    </main>
-  )
+  return <Profile />
 }
 
 export default App
