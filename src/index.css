@@ -25,6 +25,30 @@
   color-scheme: dark;
 }
 
+/* Theme switch: a page crossfade where View Transitions exist, a colour tween elsewhere */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 450ms;
+  animation-timing-function: ease-in-out;
+}
+
+.theme-fade,
+.theme-fade * {
+  transition:
+    background-color 450ms ease-in-out,
+    color 450ms ease-in-out,
+    border-color 450ms ease-in-out,
+    fill 450ms ease-in-out !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Rendered markdown in blog posts */
 @layer components {
   .blog-prose {
