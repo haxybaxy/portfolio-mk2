@@ -1,4 +1,5 @@
 import { useEffect, type RefObject } from 'react'
+import { reducedMotion } from '../motion'
 
 type Cell = {
   el: HTMLSpanElement
@@ -29,7 +30,7 @@ export function useGlyphRipple(ref: RefObject<HTMLElement | null>) {
     const el = ref.current
     if (!el) return
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduceMotion = reducedMotion()
     const cells: Cell[] = Array.from(el.querySelectorAll<HTMLSpanElement>('span[data-row]')).map((span) => ({
       el: span,
       row: Number(span.dataset.row),

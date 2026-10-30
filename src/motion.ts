@@ -1,7 +1,22 @@
-// Shared easing: quick start, long soft landing
-const EASE = 'ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
-export const ICON_MOTION = `transition-[opacity,translate] duration-700 ${EASE}`
-export const TEXT_MOTION = `transition-[opacity,translate] duration-500 ${EASE}`
+// Shared motion. The curve (--ease-out-soft) and the 250ms default live in index.css @theme, so every
+// transition-* utility already uses them; these add properties, longer durations and hidden states.
+// Reduced motion is handled once, globally, in index.css.
 
-/** Fade in on first paint; browsers without @starting-style simply show the element */
-export const REVEAL = `transition-opacity duration-1000 ease-out starting:opacity-0 motion-reduce:transition-none`
+/** Opacity plus a small translate: toasts, icon pairs that swap */
+export const FADE = 'transition-[opacity,translate] duration-300'
+/** FADE plus rotation, for stacked icon pairs (menu/close, sun/moon) */
+export const SWAP = 'transition-[opacity,translate,rotate] duration-300'
+/** Chevrons and other things that turn */
+export const TURN = 'transition-transform duration-300'
+/** Hover and press feedback on icon buttons */
+export const PRESS = 'transition-[opacity,scale] active:scale-95'
+/** Collapsible panel height (grid-template-rows 0fr → 1fr) */
+export const EXPAND = 'transition-[grid-template-rows] duration-300'
+/** An element mounting into a list fades up from @starting-style; stagger siblings with transitionDelay */
+export const CASCADE = `${FADE} starting:translate-y-2 starting:opacity-0`
+/** Scroll reveal (useReveal): longer and softer; the hidden state only exists when motion is allowed */
+export const REVEAL = 'transition-[opacity,translate] duration-500'
+export const REVEAL_HIDDEN = 'motion-safe:translate-y-3 motion-safe:opacity-0'
+
+/** True when the user asked for less motion; used to skip a behaviour (e.g. a view transition), not just shorten it */
+export const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches

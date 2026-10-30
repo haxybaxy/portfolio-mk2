@@ -5,6 +5,11 @@
 
 @theme {
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Motion: one curve (quick start, long soft landing), one quiet default duration */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --default-transition-duration: 250ms;
+  --default-transition-timing-function: var(--ease-out-soft);
 }
 
 /* fg/bg follow the theme; `inline` keeps utilities pointing at the live variables */
@@ -25,12 +30,41 @@
   color-scheme: dark;
 }
 
-/* Theme switch: a page crossfade where View Transitions exist, a colour tween elsewhere */
+/* View Transitions. The theme switch runs one by hand (src/hooks/useTheme.ts) with .vt-theme on <html> meanwhile;
+   React runs the Projects ones (<ViewTransition> in src/pages/Projects.tsx) and tags the moving parts with classes. */
+
+/* Only tagged parts animate by default: the page itself just switches, and stays clickable while they move */
+::view-transition-group(root),
 ::view-transition-old(root),
 ::view-transition-new(root) {
+  animation-duration: 0s;
+}
+::view-transition {
+  pointer-events: none;
+}
+
+/* Theme switch: a 450ms crossfade of the whole page */
+.vt-theme::view-transition-old(root),
+.vt-theme::view-transition-new(root) {
   animation-duration: 450ms;
   animation-timing-function: ease-in-out;
 }
+
+/* Project filter: rows glide to their places and fade in or out; the active chip's fill glides to the chosen chip */
+::view-transition-group(.projects-row),
+::view-transition-group(.projects-pill) {
+  animation-duration: 300ms;
+  animation-timing-function: var(--ease-out-soft);
+}
+::view-transition-old(.projects-row),
+::view-transition-new(.projects-row),
+::view-transition-old(.projects-pill),
+::view-transition-new(.projects-pill) {
+  animation-duration: 300ms;
+  animation-timing-function: ease-out;
+}
+
+/* Fallback theme tween where View Transitions are missing */
 
 .theme-fade,
 .theme-fade * {
@@ -41,7 +75,17 @@
     fill 450ms ease-in-out !important;
 }
 
+/* Reduced motion, decided once: every transition and animation lands at once.
+   Durations stay non-zero so transitionend still fires; stagger delays are dropped too. */
 @media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
   ::view-transition-group(*),
   ::view-transition-old(*),
   ::view-transition-new(*) {

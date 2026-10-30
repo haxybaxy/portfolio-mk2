@@ -1,10 +1,10 @@
 import { GITHUB_URL, LINKEDIN_URL } from '../contact'
 import { useCopyEmail } from '../hooks/useCopyEmail'
-import { ICON_MOTION } from '../motion'
+import { FADE, PRESS } from '../motion'
 import CopiedToast from './CopiedToast'
 import Icon, { type IconName } from './Icon'
 
-const ITEM = 'block cursor-pointer opacity-70 transition-opacity hover:opacity-100'
+const ITEM = `block cursor-pointer opacity-70 hover:opacity-100 ${PRESS}`
 const SIZE = 'size-7'
 
 /** Mail icon that copies the address, swapping to a check while "copied" */
@@ -22,10 +22,10 @@ function CopyEmailIcon() {
         className={ITEM}
       >
         <span className={`grid ${SIZE} overflow-hidden`} aria-hidden="true">
-          <Icon name="mail" className={`${SIZE} [grid-area:1/1] ${ICON_MOTION} ${copied ? 'translate-y-2 opacity-0' : ''}`} />
+          <Icon name="mail" className={`${SIZE} [grid-area:1/1] ${FADE} ${copied ? 'translate-y-2 opacity-0' : ''}`} />
           <Icon
             name="check"
-            className={`${SIZE} [grid-area:1/1] ${ICON_MOTION} ${copied ? 'delay-150' : '-translate-y-2 opacity-0'}`}
+            className={`${SIZE} [grid-area:1/1] ${FADE} ${copied ? 'delay-100' : '-translate-y-2 opacity-0'}`}
           />
         </span>
         <span className="sr-only" aria-live="polite">

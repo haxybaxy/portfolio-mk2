@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
+import { PRESS, SWAP } from '../motion'
 import Icon from './Icon'
 
 type NavItem = { id: string; label: string }
 
-const MOTION = 'transition-[opacity,translate,rotate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
-const ICON_BUTTON = 'pointer-events-auto absolute top-5 z-10 grid size-10 cursor-pointer place-items-center'
+const ICON_BUTTON = `pointer-events-auto absolute top-5 z-10 grid size-10 cursor-pointer place-items-center ${PRESS}`
+const INDICATOR = 'pointer-events-none absolute -bottom-1 h-px bg-fg transition-[left,width,opacity] duration-300'
 
 function ThemeToggle() {
   const { dark, toggle } = useTheme()
@@ -17,10 +18,53 @@ function ThemeToggle() {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className={`${ICON_BUTTON} right-16 opacity-70 transition-opacity hover:opacity-100 md:right-5`}
+      className={`${ICON_BUTTON} right-16 opacity-70 hover:opacity-100 md:right-5`}
     >
-      <Icon name={dark ? 'sun' : 'moon'} className="size-5" />
+      {/* Both icons share one cell and crossfade, inside the page crossfade when the browser has one */}
+      <Icon name="sun" className={`size-5 [grid-area:1/1] ${SWAP} ${dark ? '' : 'rotate-90 opacity-0'}`} />
+      <Icon name="moon" className={`size-5 [grid-area:1/1] ${SWAP} ${dark ? '-rotate-90 opacity-0' : ''}`} />
     </button>
+  )
+}
+
+/** Desktop link row with one bar that slides under the active link */
+function DesktopLinks({ items, activeId }: { items: NavItem[]; activeId: string }) {
+  const rowRef = useRef<HTMLDivElement>(null)
+  const barRef = useRef<HTMLSpanElement>(null)
+
+  // Placed before paint so the first position never animates; re-measured when the row resizes (viewport, font swap)
+  useLayoutEffect(() => {
+    const row = rowRef.current
+    const bar = barRef.current
+    if (!row || !bar) return
+    const place = () => {
+      const link = row.querySelector<HTMLAnchorElement>('a[aria-current]')
+      bar.style.opacity = link ? '1' : '0'
+      if (!link) return
+      bar.style.left = `${link.offsetLeft}px`
+      bar.style.width = `${link.offsetWidth}px`
+    }
+    place()
+    const observer = new ResizeObserver(place)
+    observer.observe(row)
+    document.fonts.ready.then(place)
+    return () => observer.disconnect()
+  }, [activeId])
+
+  return (
+    <div ref={rowRef} className="pointer-events-auto relative hidden gap-6 md:flex">
+      {items.map(({ id, label }) => (
+        <a
+          key={id}
+          href={`#${id}`}
+          aria-current={id === activeId ? 'true' : undefined}
+          className={`transition-opacity ${id === activeId ? 'font-bold' : 'opacity-70 hover:opacity-100'}`}
+        >
+          {label}
+        </a>
+      ))}
+      <span ref={barRef} aria-hidden="true" className={INDICATOR} />
+    </div>
   )
 }
 
@@ -49,19 +93,7 @@ function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
 
   return (
     <nav className="pointer-events-none fixed inset-x-0 top-0 z-20 flex justify-center p-6 text-sm">
-      {/* Desktop: inline links */}
-      <div className="pointer-events-auto hidden gap-6 md:flex">
-        {items.map(({ id, label }) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            aria-current={id === activeId ? 'true' : undefined}
-            className={id === activeId ? 'font-bold' : 'opacity-70 hover:opacity-100'}
-          >
-            {label}
-          </a>
-        ))}
-      </div>
+      <DesktopLinks items={items} activeId={activeId} />
 
       <ThemeToggle />
 
@@ -74,15 +106,15 @@ function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
         aria-label={open ? 'Close menu' : 'Open menu'}
         className={`${ICON_BUTTON} right-5 md:hidden`}
       >
-        <Icon name="menu" className={`size-5 [grid-area:1/1] ${MOTION} ${open ? 'rotate-90 opacity-0' : ''}`} />
-        <Icon name="close" className={`size-5 [grid-area:1/1] ${MOTION} ${open ? '' : '-rotate-90 opacity-0'}`} />
+        <Icon name="menu" className={`size-5 [grid-area:1/1] ${SWAP} ${open ? 'rotate-90 opacity-0' : ''}`} />
+        <Icon name="close" className={`size-5 [grid-area:1/1] ${SWAP} ${open ? '' : '-rotate-90 opacity-0'}`} />
       </button>
 
       {/* Mobile: full-screen menu */}
       <div
         id="mobile-menu"
         inert={!open}
-        className={`pointer-events-auto fixed inset-0 flex flex-col items-center justify-center gap-6 bg-bg/80 backdrop-blur-xl md:hidden ${MOTION} ${open ? '' : 'pointer-events-none opacity-0'}`}
+        className={`pointer-events-auto fixed inset-0 flex flex-col items-center justify-center gap-6 bg-bg/80 backdrop-blur-xl md:hidden ${SWAP} ${open ? '' : 'pointer-events-none opacity-0'}`}
       >
         {items.map(({ id, label }, i) => (
           <a
@@ -90,8 +122,8 @@ function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
             href={`#${id}`}
             onClick={() => setOpen(false)}
             aria-current={id === activeId ? 'true' : undefined}
-            style={{ transitionDelay: open ? `${60 + i * 50}ms` : '0ms' }}
-            className={`text-4xl tracking-tight ${MOTION} ${id === activeId ? 'font-bold' : ''} ${open ? (id === activeId ? '' : 'opacity-70') : 'translate-y-4 opacity-0'}`}
+            style={{ transitionDelay: open ? `${40 + i * 40}ms` : '0ms' }}
+            className={`text-4xl tracking-tight ${SWAP} ${id === activeId ? 'font-bold' : ''} ${open ? (id === activeId ? '' : 'opacity-70') : 'translate-y-4 opacity-0'}`}
           >
             {label}
           </a>
