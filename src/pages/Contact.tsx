@@ -1,4 +1,5 @@
 import CopiedToast from "../components/CopiedToast";
+import Reveal from "../components/Reveal";
 import { EMAIL } from "../contact";
 import { useCopyEmail } from "../hooks/useCopyEmail";
 import { LINK, SECTION_TITLE } from "../surface";
@@ -28,9 +29,13 @@ function CopyEmailText() {
 function Contact() {
   return (
     <div className="flex w-full max-w-3xl flex-col gap-8">
-      <h2 className={SECTION_TITLE}>Contact</h2>
+      <Reveal>
+        <h2 className={SECTION_TITLE}>Contact</h2>
+      </Reveal>
 
       <div className="flex flex-col gap-5">
+        {/* The copy button stays outside the reveal: it renders a fixed toast, which a transformed ancestor would trap */}
+        <Reveal className="flex flex-col gap-5">
         <p className="text-2xl font-bold tracking-tight md:text-3xl">
           Want to work together?
         </p>
@@ -39,6 +44,7 @@ function Contact() {
           <br />
           send me an email at my business address.
         </p>
+        </Reveal>
         <CopyEmailText />
       </div>
     </div>

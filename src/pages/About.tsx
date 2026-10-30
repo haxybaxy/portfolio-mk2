@@ -1,3 +1,4 @@
+import Reveal from '../components/Reveal'
 import { MUTED, PANEL, SECTION_TITLE } from '../surface'
 
 const NOW = [
@@ -10,9 +11,11 @@ const NOW = [
 function About() {
   return (
     <div className="flex w-full max-w-3xl flex-col gap-12">
-      <h2 className={SECTION_TITLE}>About</h2>
+      <Reveal>
+        <h2 className={SECTION_TITLE}>About</h2>
+      </Reveal>
 
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+      <Reveal delay={80} className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
         <img
           src="/myphoto.jpeg"
           alt="Zaid Alsaheb"
@@ -34,7 +37,7 @@ function About() {
             </ul>
           </div>
         </div>
-      </div>
+      </Reveal>
     </div>
   )
 }
