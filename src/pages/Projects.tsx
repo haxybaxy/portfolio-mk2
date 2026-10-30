@@ -61,6 +61,11 @@ function Projects() {
   const [selected, setSelected] = useState<Project>(projects[0])
   // Desktop: hovering a row previews it without changing the selection
   const [peek, setPeek] = useState<Project | null>(null)
+  const peekAt = (project: Project) => {
+    // Warm the cache so the preview photo swaps without a blank frame
+    new Image().src = project.imageUrl
+    setPeek(project)
+  }
 
   // Following a #project-<slug> link (from Experience) selects that project, widening the filter if needed
   useEffect(() => {
@@ -113,7 +118,7 @@ function Projects() {
                   <button
                     type="button"
                     onClick={() => setSelected(project)}
-                    onPointerEnter={() => setPeek(project)}
+                    onPointerEnter={() => peekAt(project)}
                     aria-pressed={isSelected}
                     className={`flex w-full cursor-pointer items-baseline justify-between gap-4 py-2.5 text-left ${isSelected ? '' : 'opacity-70 hover:opacity-100'}`}
                   >

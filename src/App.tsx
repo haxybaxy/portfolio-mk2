@@ -22,7 +22,12 @@ function App() {
       <Nav items={sections} activeId={sections[activeIndex].id} />
       <main>
         {sections.map(({ id, Component }) => (
-          <section key={id} id={id} className="flex min-h-svh flex-col items-center justify-center px-6 py-24">
+          <section
+            key={id}
+            id={id}
+            // Only the hero is centred; content sections anchor to the top so expanding rows only grow downwards
+            className={`flex min-h-svh flex-col items-center px-6 ${id === 'home' ? 'justify-center py-24' : 'pt-28 pb-24'}`}
+          >
             <Component />
           </section>
         ))}
