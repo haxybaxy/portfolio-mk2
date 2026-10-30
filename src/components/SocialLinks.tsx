@@ -1,6 +1,7 @@
 import { GITHUB_URL, LINKEDIN_URL } from '../contact'
 import { useCopyEmail } from '../hooks/useCopyEmail'
-import { ICON_MOTION, TEXT_MOTION } from '../motion'
+import { ICON_MOTION } from '../motion'
+import CopiedToast from './CopiedToast'
 import Icon, { type IconName } from './Icon'
 
 const ITEM = 'block cursor-pointer opacity-70 transition-opacity hover:opacity-100'
@@ -32,21 +33,6 @@ function CopyEmailIcon() {
         </span>
       </button>
     </>
-  )
-}
-
-/** Fixed pill at the bottom of the viewport while the address is on the clipboard */
-function CopiedToast({ visible }: { visible: boolean }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={`pointer-events-none fixed inset-x-0 bottom-8 z-30 flex justify-center px-6 ${TEXT_MOTION} ${visible ? '' : 'translate-y-2 opacity-0'}`}
-    >
-      <span className="flex items-center gap-2 rounded-full border border-fg/15 bg-bg px-4 py-2 text-sm shadow-lg shadow-black/20">
-        <Icon name="check" />
-        Email copied to clipboard
-      </span>
-    </div>
   )
 }
 
