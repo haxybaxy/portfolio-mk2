@@ -169,16 +169,19 @@ float shapeTruchet(vec2 uv, float t) {
   return pow(shape, 1.5);
 }
 
+// Pushes the two corner shapes apart from the center (0 = original Paper look)
+const float CORNER_GAP = 0.1;
+
 float shapeCorners(vec2 uv, float t) {
   uv *= .6;
   vec2 outer = vec2(.5);
 
-  vec2 bl = smoothstep(vec2(0.), outer, uv + vec2(.1 + .1 * sin(3. * t), .2 - .1 * sin(5.25 * t)));
+  vec2 bl = smoothstep(vec2(0.), outer, uv - CORNER_GAP + vec2(.1 + .1 * sin(3. * t), .2 - .1 * sin(5.25 * t)));
   vec2 tr = smoothstep(vec2(0.), outer, 1. - uv);
   float shape = 1. - bl.x * bl.y * tr.x * tr.y;
 
   uv = -uv;
-  bl = smoothstep(vec2(0.), outer, uv + vec2(.1 + .1 * sin(3. * t), .2 - .1 * cos(5.25 * t)));
+  bl = smoothstep(vec2(0.), outer, uv - CORNER_GAP + vec2(.1 + .1 * sin(3. * t), .2 - .1 * cos(5.25 * t)));
   tr = smoothstep(vec2(0.), outer, 1. - uv);
   shape -= bl.x * bl.y * tr.x * tr.y;
 

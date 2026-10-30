@@ -1,23 +1,48 @@
 import GlassWindow from '../components/GlassWindow'
+import { skillCategories } from '../data/skills'
+import { CARD, PAGE_TITLE } from '../surface'
 
 function About() {
   return (
-    <div className="flex w-full max-w-2xl flex-col items-center gap-8 text-center">
-      <h1 className="text-[clamp(3rem,10vw,8rem)] leading-none font-bold tracking-tighter">About</h1>
-      <div className="flex flex-col gap-4 leading-relaxed opacity-90">
-        <p>
-          I build things for the web and spend too much time making the small details feel right. Most days that means
-          React, TypeScript and the occasional shader I don't fully understand yet.
-        </p>
-        <p>
-          Before this I bounced between design and engineering, which left me caring about how things look as much as
-          how they work. These days I'm somewhere in the middle and happy there.
-        </p>
-        <p>
-          Outside of work you'll find me walking around Madrid, collecting pixel fonts I'll never use, and starting side
-          projects faster than I finish them.
-        </p>
+    <div className="flex w-full max-w-4xl flex-col items-center gap-10">
+      <h1 className={PAGE_TITLE}>About</h1>
+
+      <div className={`${CARD} flex w-full flex-col items-center gap-6 p-6 sm:flex-row sm:items-start`}>
+        <img
+          src="/myphoto.jpeg"
+          alt="Zaid Alsaheb"
+          className="size-40 shrink-0 rounded-xl object-cover sm:size-48"
+          loading="lazy"
+        />
+        <div className="flex flex-col gap-4 leading-relaxed">
+          <p>
+            I am currently an <strong>undergrad student at IE University</strong>, pursuing a bachelors degree in{' '}
+            <strong>Computer Science and Artificial Intelligence</strong>. I am very passionate about technology and all
+            of its interconnected facets, which drives me to learn about anything and everything.
+          </p>
+          <p className="opacity-80">Here are some of the technologies that I&apos;ve worked with:</p>
+        </div>
       </div>
+
+      <div className="grid w-full gap-4 sm:grid-cols-2">
+        {skillCategories.map((category) => (
+          <div key={category.title} className={`${CARD} p-5`}>
+            <h2 className="mb-3 font-bold">{category.title}</h2>
+            <ul className="flex flex-wrap gap-2">
+              {category.skills.map((skill) => (
+                <li
+                  key={skill.name}
+                  className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-sm"
+                >
+                  <img src={skill.icon} alt="" className="size-4" loading="lazy" />
+                  {skill.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
       <GlassWindow title="now.txt">
         <p className="mb-3 opacity-70">~ ❯ cat now.txt</p>
         <ul className="flex flex-col gap-2">

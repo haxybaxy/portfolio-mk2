@@ -3,3 +3,35 @@
 @theme {
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
+
+/* Rendered markdown in blog posts */
+@layer components {
+  .blog-prose {
+    @apply flex flex-col gap-4 leading-relaxed;
+
+    & h2 { @apply mt-6 text-xl font-bold; }
+    & h3 { @apply mt-4 text-lg font-bold; }
+    & a { @apply underline decoration-white/40 underline-offset-4 hover:decoration-white; }
+    & ul { @apply flex list-['→_'] flex-col gap-1 pl-6; }
+    & ol { @apply flex list-decimal flex-col gap-1 pl-6; }
+    & blockquote { @apply border-l-2 border-white/30 pl-4 opacity-80; }
+    & :not(pre) > code { @apply rounded bg-white/10 px-1.5 py-0.5 text-[0.9em]; }
+    & pre { @apply overflow-x-auto rounded-xl border border-white/10 bg-black/50 p-4 text-sm; }
+    & table { @apply block w-full overflow-x-auto text-sm; }
+    & th, & td { @apply border border-white/15 px-3 py-2 text-left; }
+    & th { @apply bg-white/5; }
+    & img { @apply rounded-xl; }
+    & hr { @apply border-white/15; }
+  }
+
+  /* highlight.js classes from rehype-highlight, Catppuccin Mocha as on the old site */
+  .blog-prose .hljs-comment, .blog-prose .hljs-quote { color: #7f849c; font-style: italic; }
+  .blog-prose .hljs-keyword, .blog-prose .hljs-selector-tag, .blog-prose .hljs-literal { color: #cba6f7; }
+  .blog-prose .hljs-string, .blog-prose .hljs-addition { color: #a6e3a1; }
+  .blog-prose .hljs-number, .blog-prose .hljs-built_in { color: #fab387; }
+  .blog-prose .hljs-title, .blog-prose .hljs-section, .blog-prose .hljs-name { color: #89b4fa; }
+  .blog-prose .hljs-attr, .blog-prose .hljs-attribute, .blog-prose .hljs-type { color: #f9e2af; }
+  .blog-prose .hljs-variable, .blog-prose .hljs-template-variable, .blog-prose .hljs-params { color: #f2cdcd; }
+  .blog-prose .hljs-meta { color: #74c7ec; }
+  .blog-prose .hljs-symbol, .blog-prose .hljs-deletion { color: #f38ba8; }
+}

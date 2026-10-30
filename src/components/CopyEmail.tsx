@@ -1,31 +1,10 @@
 import { Check } from 'pixelarticons/react/Check.js'
 import { Mail } from 'pixelarticons/react/Mail.js'
-import { useEffect, useRef, useState } from 'react'
-
-const EMAIL = ['him', 'zaidalsaheb.com'].join('@')
-const RESET_AFTER_MS = 2000
-
-// Shared easing: quick start, long soft landing
-const EASE = 'ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
-const ICON_MOTION = `transition-[opacity,translate] duration-700 ${EASE}`
-const TEXT_MOTION = `transition-[opacity,translate] duration-500 ${EASE}`
+import { useCopyEmail } from '../hooks/useCopyEmail'
+import { ICON_MOTION, TEXT_MOTION } from '../motion'
 
 function CopyEmail() {
-  const [copied, setCopied] = useState(false)
-  const timeoutRef = useRef<number>(undefined)
-
-  useEffect(() => () => window.clearTimeout(timeoutRef.current), [])
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(EMAIL)
-    } catch {
-      return
-    }
-    setCopied(true)
-    window.clearTimeout(timeoutRef.current)
-    timeoutRef.current = window.setTimeout(() => setCopied(false), RESET_AFTER_MS)
-  }
+  const { copied, copy } = useCopyEmail()
 
   return (
     <button

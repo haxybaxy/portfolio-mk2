@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getScrollProgress } from '../scrollProgress'
 import type { Background } from '../sections'
 import { hexToOklab, oklabToRgba } from './color'
+import { updateLivePalette } from './livePalette'
 import { COLOR_COUNT, grainMorphShader, SHAPES } from './grainMorphShader'
 import { isSettled, stepSpring, type SpringValue } from './spring'
 
@@ -78,18 +79,22 @@ function MorphingBackground({ stops, className }: { stops: Background[]; classNa
 
   // Must keep a stable identity: ShaderMount resets every uniform whenever this
   // object changes, and only registers uniforms present on first mount.
-  const [initialUniforms] = useState(() => ({
-    ...toUniforms(targetsAt(stops.map(toTargets), getScrollProgress(stops.length))),
-    u_noiseTexture: getShaderNoiseTexture(),
-    u_fit: ShaderFitOptions.contain,
-    u_rotation: 0,
-    u_offsetX: 0,
-    u_offsetY: 0,
-    u_originX: 0.5,
-    u_originY: 0.5,
-    u_worldWidth: 0,
-    u_worldHeight: 0,
-  }))
+  const [initialUniforms] = useState(() => {
+    const uniforms = toUniforms(targetsAt(stops.map(toTargets), getScrollProgress(stops.length)))
+    updateLivePalette(uniforms.u_colors, uniforms.u_colorBack)
+    return {
+      ...uniforms,
+      u_noiseTexture: getShaderNoiseTexture(),
+      u_fit: ShaderFitOptions.contain,
+      u_rotation: 0,
+      u_offsetX: 0,
+      u_offsetY: 0,
+      u_originX: 0.5,
+      u_originY: 0.5,
+      u_worldWidth: 0,
+      u_worldHeight: 0,
+    }
+  })
 
   useEffect(() => {
     const stopTargets = stops.map(toTargets)
@@ -122,7 +127,9 @@ function MorphingBackground({ stops, className }: { stops: Background[]; classNa
       })
 
       const mount = elementRef.current?.paperShaderMount as unknown as UniformWriter | undefined
-      mount?.setUniformValues(toUniforms(springs.map((spring) => spring.value)))
+      const uniforms = toUniforms(springs.map((spring) => spring.value))
+      updateLivePalette(uniforms.u_colors, uniforms.u_colorBack)
+      mount?.setUniformValues(uniforms)
 
       // Keep going until settled, and until the mount exists so the final values land
       frame = settled && mount ? null : requestAnimationFrame(tick)

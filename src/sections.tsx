@@ -45,16 +45,6 @@ export const sections: Section[] = [
     },
   },
   {
-    id: 'projects',
-    label: 'Projects',
-    Component: Projects,
-    background: {
-      colors: ['#00ff9d', '#00bfa6', '#0077ff', '#003b2f'],
-      colorBack: '#000a06',
-      shape: 'truchet',
-    },
-  },
-  {
     id: 'experience',
     label: 'Experience',
     Component: Experience,
@@ -62,6 +52,16 @@ export const sections: Section[] = [
       colors: ['#ffd000', '#ff7a00', '#ff0055', '#1a0033'],
       colorBack: '#0a0500',
       shape: 'ripple',
+    },
+  },
+  {
+    id: 'projects',
+    label: 'Projects',
+    Component: Projects,
+    background: {
+      colors: ['#00ff9d', '#00bfa6', '#0077ff', '#003b2f'],
+      colorBack: '#000a06',
+      shape: 'truchet',
     },
   },
   {
