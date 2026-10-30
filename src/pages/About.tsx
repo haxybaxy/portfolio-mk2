@@ -1,5 +1,3 @@
-import TechChip from '../components/TechChip'
-import { skillCategories } from '../data/skills'
 import { MUTED, PANEL, SECTION_TITLE } from '../surface'
 
 const NOW = [
@@ -36,19 +34,6 @@ function About() {
             </ul>
           </div>
         </div>
-      </div>
-
-      <div className="flex flex-col gap-6">
-        {skillCategories.map((category) => (
-          <div key={category.title} className="flex flex-col gap-3">
-            <h3 className={MUTED}>{category.title}</h3>
-            <ul className="flex flex-wrap gap-2">
-              {category.skills.map((skill) => (
-                <TechChip key={skill} name={skill} />
-              ))}
-            </ul>
-          </div>
-        ))}
       </div>
     </div>
   )

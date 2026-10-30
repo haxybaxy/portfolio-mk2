@@ -3,6 +3,7 @@ import Icon from '../components/Icon'
 import TechChip from '../components/TechChip'
 import { jobs } from '../data/jobs'
 import { projectSlug } from '../data/projects'
+import { skillCategories } from '../data/skills'
 import { LINK, MUTED, SECTION_TITLE } from '../surface'
 
 // Every role starts collapsed; the row shows dates, role and company
@@ -72,6 +73,19 @@ function Experience() {
           </li>
         ))}
       </ol>
+
+      <div className="flex flex-col gap-6 border-t border-fg/10 pt-10">
+        {skillCategories.map((category) => (
+          <div key={category.title} className="flex flex-col gap-3">
+            <h3 className={MUTED}>{category.title}</h3>
+            <ul className="flex flex-wrap gap-2">
+              {category.skills.map((skill) => (
+                <TechChip key={skill} name={skill} />
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
