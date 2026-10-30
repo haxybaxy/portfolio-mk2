@@ -5,13 +5,10 @@ import Home from './pages/Home'
 import Projects from './pages/Projects'
 import Writing from './pages/Writing'
 
-/** Path segments after the section, e.g. ["skoll"] for #/projects/skoll */
-export type PageProps = { params: string[] }
+type Section = { id: string; label: string; Component: ComponentType }
 
-export type Route = { id: string; label: string; Component: ComponentType<PageProps> }
-
-// The first entry is the landing page and the fallback for unknown paths
-export const routes: Route[] = [
+// One scrolling page; the nav jumps between these anchors
+export const sections: Section[] = [
   { id: 'home', label: 'Home', Component: Home },
   { id: 'about', label: 'About', Component: About },
   { id: 'experience', label: 'Experience', Component: Experience },

@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
-import { href } from '../router'
 import Icon from './Icon'
 
 type NavItem = { id: string; label: string }
-
-const linkTo = (id: string) => (id === 'home' ? '#/' : href(id))
 
 const MOTION = 'transition-[opacity,translate,rotate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
 const ICON_BUTTON = 'pointer-events-auto absolute top-5 z-10 grid size-10 cursor-pointer place-items-center'
@@ -57,8 +54,8 @@ function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
         {items.map(({ id, label }) => (
           <a
             key={id}
-            href={linkTo(id)}
-            aria-current={id === activeId ? 'page' : undefined}
+            href={`#${id}`}
+            aria-current={id === activeId ? 'true' : undefined}
             className={id === activeId ? 'font-bold' : 'opacity-70 hover:opacity-100'}
           >
             {label}
@@ -90,9 +87,9 @@ function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
         {items.map(({ id, label }, i) => (
           <a
             key={id}
-            href={linkTo(id)}
+            href={`#${id}`}
             onClick={() => setOpen(false)}
-            aria-current={id === activeId ? 'page' : undefined}
+            aria-current={id === activeId ? 'true' : undefined}
             style={{ transitionDelay: open ? `${60 + i * 50}ms` : '0ms' }}
             className={`text-4xl tracking-tight ${MOTION} ${id === activeId ? 'font-bold' : ''} ${open ? (id === activeId ? '' : 'opacity-70') : 'translate-y-4 opacity-0'}`}
           >

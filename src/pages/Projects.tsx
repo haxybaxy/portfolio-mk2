@@ -1,10 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Icon from '../components/Icon'
 import TechChip from '../components/TechChip'
 import { jobs } from '../data/jobs'
 import { categoryOrder, projectSlug, projects, type Project } from '../data/projects'
-import { href } from '../router'
-import type { PageProps } from '../routes'
 import { LINK, MUTED, PANEL, SECTION_TITLE } from '../surface'
 
 // Listed categories first in their set order, then any others in the order they appear
@@ -44,7 +42,7 @@ function ProjectDetail({ project }: { project: Project }) {
       </div>
       <p className="text-sm leading-relaxed opacity-80">{project.description}</p>
       {builtAt.map((job) => (
-        <a key={job.id} href={href('experience', job.id)} className={`inline-flex items-center gap-2 text-sm ${LINK}`}>
+        <a key={job.id} href={`#job-${job.id}`} className={`inline-flex items-center gap-2 text-sm ${LINK}`}>
           <Icon name="briefcase" />
           Built at {job.company}
         </a>
@@ -58,16 +56,31 @@ function ProjectDetail({ project }: { project: Project }) {
   )
 }
 
-function Projects({ params }: PageProps) {
-  const linked = projects.find((project) => projectSlug(project.title) === params[0])
-  // Start on Featured unless the URL points at a project that is not in it
-  const [filter, setFilter] = useState<Filter>(linked && !linked.featured ? 'All' : 'Featured')
+function Projects() {
+  const [filter, setFilter] = useState<Filter>('Featured')
+  const [selected, setSelected] = useState<Project>(projects[0])
   // Desktop: hovering a row previews it without changing the selection
   const [peek, setPeek] = useState<Project | null>(null)
 
+  // Following a #project-<slug> link (from Experience) selects that project, widening the filter if needed
+  useEffect(() => {
+    const selectFromHash = () => {
+      const match = /^#project-([\w-]+)$/.exec(window.location.hash)
+      const project = match && projects.find((candidate) => projectSlug(candidate.title) === match[1])
+      if (!project) return
+      setSelected(project)
+      setFilter((current) => (matches(project, current) ? current : 'All'))
+      // The list may grow when the filter widens, so align the row after React has rendered
+      requestAnimationFrame(() => document.getElementById(`project-${match[1]}`)?.scrollIntoView({ block: 'start' }))
+    }
+    selectFromHash()
+    window.addEventListener('hashchange', selectFromHash)
+    return () => window.removeEventListener('hashchange', selectFromHash)
+  }, [])
+
   const visible = projects.filter((project) => matches(project, filter))
-  const selected = linked && visible.includes(linked) ? linked : visible[0]
-  const previewed = peek ?? selected
+  const current = visible.includes(selected) ? selected : visible[0]
+  const previewed = peek ?? current
 
   return (
     <div className="flex w-full max-w-6xl flex-col gap-10">
@@ -94,18 +107,19 @@ function Projects({ params }: PageProps) {
 
           <ul className="flex flex-col" onPointerLeave={() => setPeek(null)}>
             {visible.map((project) => {
-              const isSelected = project === selected
+              const isSelected = project === current
               return (
-                <li key={project.title} className="border-b border-fg/10 last:border-b-0">
-                  <a
-                    href={href('projects', projectSlug(project.title))}
+                <li key={project.title} id={`project-${projectSlug(project.title)}`} className="scroll-mt-28 border-b border-fg/10 last:border-b-0">
+                  <button
+                    type="button"
+                    onClick={() => setSelected(project)}
                     onPointerEnter={() => setPeek(project)}
-                    aria-current={isSelected ? 'page' : undefined}
-                    className={`flex items-baseline justify-between gap-4 py-2.5 ${isSelected ? '' : 'opacity-70 hover:opacity-100'}`}
+                    aria-pressed={isSelected}
+                    className={`flex w-full cursor-pointer items-baseline justify-between gap-4 py-2.5 text-left ${isSelected ? '' : 'opacity-70 hover:opacity-100'}`}
                   >
                     <span className={isSelected ? 'font-bold' : ''}>{project.title}</span>
                     <span className={`${MUTED} shrink-0 text-right`}>{project.category}</span>
-                  </a>
+                  </button>
                   {/* Phones have no preview pane: the selected row expands in place */}
                   {isSelected && (
                     <div className="pt-2 pb-6 md:hidden">
