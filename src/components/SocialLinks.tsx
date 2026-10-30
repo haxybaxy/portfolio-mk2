@@ -4,7 +4,7 @@ import { ICON_MOTION } from '../motion'
 import Icon, { type IconName } from './Icon'
 
 const ITEM = 'block cursor-pointer opacity-70 transition-opacity hover:opacity-100'
-const SIZE = 'size-5'
+const SIZE = 'size-7'
 
 /** Mail icon that copies the address, swapping to a check while "copied" */
 function CopyEmailIcon() {
@@ -39,7 +39,7 @@ const links: { label: string; href: string; icon: IconName }[] = [
 
 function SocialLinks({ className = '' }: { className?: string }) {
   return (
-    <ul className={`flex items-center gap-5 ${className}`}>
+    <ul className={`flex items-center gap-7 ${className}`}>
       <li>
         <CopyEmailIcon />
       </li>
