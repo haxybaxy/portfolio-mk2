@@ -1,59 +1,56 @@
-                                      
-           \,,,.                      
-        .:;\\~~~|                     
-       \;~~~\~~~||                    
-       \\~~~\\~~~|.         /         
-        \\~~~\~~~|~      .//~;:.      
-        .\\~~\\~~|~.    ://~~~~//     
-         :\\~~\~~|~:  .~//~~~//~~:    
-          ~\\~\\~|~~ :~//~~///~~~~.   
-          .~\\~\\|~~~~//~///~~~///    
-           .~\\~\|~~~/////~~////.     
-            .~~\\||~////~////~,       
-              ;~\__\/////~~;.         
-               ~/@@B\/~~;.            
-              //8W@8),                
-             /#@@BB#)                 
-             /8B@BMb)                 
-            /8@@@B%b)                 
-           /8B@@B@%)                  
-          /bMB@WB88)                  
-          /%MW@B@Mb)                  
-         /#BBBW@M8#)                  
-         (%8@WB@B8#e)                 
-        (mMBB@W@B8#a)                 
-        (#8BBWWB%8#e)                 
-        (8MBW@ooocoa)                 
-       (m#B@%ooxvcvv)                 
-       (bMMB%ooxxvvvv)                
-       (b8B@Mooxvcvvv)                
-       (#%BB@@oxxvvvv)   ..           
-       (bMMB@Woovcvvvx) |;:,/         
-       (##B@@BMoxcxomo)||~//          
-  .\\\ (b8BMBW@8ob#%bm)|///           
- .:;;\\(b%MB@BWWBMB8#mo)/,            
-  ---~\(b%8BB@WW@@888ba\,             
-    ---(abBBB@WWWBBB%bbo\             
-       :(%%8@@BWW@B888ba\             
-        (b###b8BWWBBB%#be\            
-        (oxxvxxooBBB888beo\    .,,/.  
-         (vvccxxoo#@BM8##e\   |;;//;. 
-         (vvvxvxcoo%MB88#ao\ .|~~/~~/ 
-         (vvcvxxxxooo%M8##mx\;|~//~// 
-          (vvccccxxocco%8%aa\~|~/~//. 
-          \vvvccoxxooxobM##bo\|////:  
-           \vvvcccxxxomMB8%beo\///;   
-      \\\   \vvvxxocoM@@M8M##ax\/:    
-    \:;;\\\,\vvcvxco@@B@M@M%#me\:     
-   .\\\\\~\\\\oooobB@BW@@B8M8#bo\     
-    :;~~\\\\\\eb%88@B@@B@BMB8%bmo)    
-    -------\\\\e%%B@B@@@WBBBM8%ba)    
-       .,;~~---\b#8MB@@@@@BBMM%#a)    
-                \b88BB@@@@@B8#8#m)    
-                 \b%8BB@@@@#xxx#m)    
-                  \\#8MB@@8oxcc..)    
-                    \\#MM8xxcxvvv)    
-                      \\%..xoxxv)     
-                        \\--o#oo/     
-                            ---/      
-                                      
+                                            
+         ...                                
+     .,\\~~~;|                              
+    .;~~\\~~~|.                             
+    \~~~~\~~~||.        /..                 
+    \\\~~\\~~~|;      ./~~~;//              
+     ,\\~~\\~~|~.   .;/~~~~//;.             
+      ;\\~~\~~|~:  ,~//~~///~~;.            
+      .~\\~\\~|~~.:~//~~//~~~~//            
+       .~\\\\\||~~~//~///~~////             
+        .~~\\\~|~~/////~////:               
+          ~~\\\|~////////~;.                
+           ,~\\--/////~~:.                  
+            .//@B\\~~;.                     
+            /#BWB#).                        
+           /#@BBB#)                         
+           /8BWBMm)                         
+          /8@@@B%)                          
+         /%M@@BB8)                          
+         /8BBW@8%)                          
+        /#M@@M@B#e)                         
+        (MBB@WMM%a)                         
+       (%%BW@B@8#a)                         
+       (#BB@WWBM#m)                         
+       (8B@@W@8%%m)                         
+      (#8M@WMooxce)                         
+      (m8@Bboxcvcvv)                        
+      (%MMBoooxxvvv)                        
+      (#8B@%oocvcvv)                        
+      (#%B@@@oxxvvvv) ||::.                 
+      (bBMB@Woxvcvvv\:|;;//                 
+      (##M@@BMoxcxabo\|~//                  
+      (m%MMBW@M##88bmo\//                   
+ .,\\\(a#BB@B@WWMB88be\;                    
+ ,;;~\\(%#M@@@W@WBM8#be\                    
+ -----\(m8BBBW@WWMBM%%ao\     .|,,          
+    ..:(a#8MW@BWW@@88#bmo\  \:;||;:|        
+        (##%##8B@WBBB88beo\ \\~~|~~|        
+        \eoxxcoxooM@B88b#ao\,\~~|~|;        
+         \vcvxcxooo8MBM88bmo\\\~|~|~        
+          \vvcxvxvooo8888##ae\\\|||;        
+          \vvcvxxxooooxob88#ba\\||~,        
+           \vvvcxvxcooxxo%M#%mao\|~         
+            \vvcvxxxxoxobBM8M##be\\         
+             \vvvvxvxco#B@@MB88#bme\\       
+              \vvvccxooBB@@BBM88##bme\\     
+               \vvcvxxoBBB@B@BBBM8%##ma\\   
+          ---...\xooo#8W@@W@W@B@BBMM8%bmo\  
+        .:;;-----\\m%M8BBM@B@@@B@Bboo#m.a\  
+        -----------\e##8BM@@@@@@@Boxcxcxob) 
+        .:;~~~~~----\\b#M8MBBB@@@@oxxcxccx) 
+         -------~~~:. \\b#%MMBB@@Booxoxoo#) 
+                        \\b#%8MMBB8oxcoM@@/ 
+                          \\\##88M.a%#MB//  
+                             \________//    
+                                            
