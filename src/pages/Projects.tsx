@@ -1,10 +1,9 @@
-import { startTransition, useEffect, useState, ViewTransition, type TransitionEvent } from 'react'
+import { useEffect, useState, type TransitionEvent } from 'react'
 import Icon from '../components/Icon'
 import Reveal from '../components/Reveal'
 import TechChip from '../components/TechChip'
 import { jobs } from '../data/jobs'
 import { categoryOrder, projectSlug, projects, type Project } from '../data/projects'
-import { reducedMotion } from '../motion'
 import { LINK, MUTED, PANEL, SECTION_TITLE } from '../surface'
 
 // Listed categories first in their set order, then any others in the order they appear
@@ -20,7 +19,7 @@ function matches(project: Project, filter: Filter) {
 
 const ICON_LINK = 'opacity-70 transition-opacity hover:opacity-100'
 const CHIP_BUTTON =
-  'relative cursor-pointer rounded-full border px-3 py-1 text-sm transition-[color,border-color,opacity,scale] duration-300 active:scale-[0.98]'
+  'cursor-pointer rounded-full border px-3 py-1 text-sm transition-[color,background-color,border-color,opacity,scale] duration-300 active:scale-[0.98]'
 
 /** Photo, links, description, where it was built and the stack for one project */
 function ProjectDetail({ project }: { project: Project }) {
@@ -116,9 +115,7 @@ function Projects() {
   const changeFilter = (option: Filter) => {
     if (option === filter) return
     setClosing(null)
-    // Inside a Transition the <ViewTransition>s below glide the rows and the chip fill between layouts
-    if (reducedMotion()) setFilter(option)
-    else startTransition(() => setFilter(option))
+    setFilter(option)
   }
   const select = (project: Project) => {
     if (project === current) return
@@ -147,23 +144,19 @@ function Projects() {
                     type="button"
                     onClick={() => changeFilter(option)}
                     aria-pressed={isActive}
-                    className={`${CHIP_BUTTON} ${isActive ? 'border-fg text-bg' : 'border-fg/20 opacity-70 hover:opacity-100'}`}
+                    className={`${CHIP_BUTTON} ${isActive ? 'border-fg bg-fg text-bg' : 'border-fg/20 opacity-70 hover:opacity-100'}`}
                   >
-                    {/* The fill lives only in the active chip, so it glides over when another is chosen */}
-                    {isActive && (
-                      <ViewTransition name="project-filter" default="projects-pill">
-                        <span aria-hidden="true" className="absolute inset-0 rounded-full bg-fg" />
-                      </ViewTransition>
-                    )}
-                    <span className="relative">{option}</span>
+                    {option}
                   </button>
                 </li>
               )
             })}
           </ul>
 
+          {/* Keyed by filter: a new list mounts and fades in whenever the filter changes */}
           <ul
-            className="flex flex-col"
+            key={filter}
+            className="flex flex-col transition-opacity duration-300 starting:opacity-0"
             onPointerEnter={(event) => {
               if (event.pointerType !== 'touch') warmPhotos()
             }}
@@ -173,8 +166,7 @@ function Projects() {
               const isSelected = project === current
               const slug = projectSlug(project.title)
               return (
-                <ViewTransition key={project.title} name={`project-${slug}`} default="projects-row">
-                  <li id={`project-${slug}`} className="scroll-mt-28 border-b border-fg/10 last:border-b-0">
+                <li key={project.title} id={`project-${slug}`} className="scroll-mt-28 border-b border-fg/10 last:border-b-0">
                     <button
                       type="button"
                       onClick={() => select(project)}
@@ -208,8 +200,7 @@ function Projects() {
                         )}
                       </div>
                     </div>
-                  </li>
-                </ViewTransition>
+                </li>
               )
             })}
           </ul>

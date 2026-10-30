@@ -30,10 +30,9 @@
   color-scheme: dark;
 }
 
-/* View Transitions. The theme switch runs one by hand (src/hooks/useTheme.ts) with .vt-theme on <html> meanwhile;
-   React runs the Projects ones (<ViewTransition> in src/pages/Projects.tsx) and tags the moving parts with classes. */
+/* View Transitions: the theme switch runs one by hand (src/hooks/useTheme.ts) with .vt-theme on <html> meanwhile */
 
-/* Only tagged parts animate by default: the page itself just switches, and stays clickable while they move */
+/* Nothing animates by default, and the page stays clickable while a transition runs */
 ::view-transition-group(root),
 ::view-transition-old(root),
 ::view-transition-new(root) {
@@ -48,20 +47,6 @@
 .vt-theme::view-transition-new(root) {
   animation-duration: 450ms;
   animation-timing-function: ease-in-out;
-}
-
-/* Project filter: rows glide to their places and fade in or out; the active chip's fill glides to the chosen chip */
-::view-transition-group(.projects-row),
-::view-transition-group(.projects-pill) {
-  animation-duration: 300ms;
-  animation-timing-function: var(--ease-out-soft);
-}
-::view-transition-old(.projects-row),
-::view-transition-new(.projects-row),
-::view-transition-old(.projects-pill),
-::view-transition-new(.projects-pill) {
-  animation-duration: 300ms;
-  animation-timing-function: ease-out;
 }
 
 /* Fallback theme tween where View Transitions are missing */
