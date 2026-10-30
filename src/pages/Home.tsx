@@ -1,38 +1,24 @@
-import { MapPin } from "pixelarticons/react/MapPin.js";
-import { lazy, Suspense } from "react";
-import CopyEmail from "../components/CopyEmail";
-
-// Split out so three.js loads after the page instead of blocking it
-const Smiley = lazy(() => import("../components/Smiley"));
-
-const SMILEY_SIZE = "-mb-6 size-[clamp(9rem,36vw,14rem)]";
+import { MapPin } from 'pixelarticons/react/MapPin.js'
+import Koi from '../components/Koi'
+import SocialLinks from '../components/SocialLinks'
+import { REVEAL } from '../motion'
+import { PIXEL_ICON } from '../surface'
 
 function Home() {
   return (
-    <div className="flex flex-col items-center gap-6">
-      {/* Fallback holds the same space so nothing shifts when the smiley loads */}
-      <Suspense fallback={<div className={SMILEY_SIZE} />}>
-        <Smiley className={SMILEY_SIZE} />
-      </Suspense>
-      <h1 className="flex flex-col items-center leading-none">
-        <span className="text-center text-[clamp(2rem,16vw,6rem)] font-bold tracking-tighter">
-          Zaid Alsaheb
-        </span>
-      </h1>
-      <div className="flex flex-col items-center gap-2">
-        <p className="flex items-center gap-2 opacity-80">
-          <MapPin
-            width={24}
-            height={24}
-            shapeRendering="crispEdges"
-            aria-hidden="true"
-          />
+    <div className="flex flex-col items-center justify-center gap-10 md:flex-row md:gap-16">
+      {/* Name first in the DOM: stacks above the koi on phones, sits to its left on wider screens */}
+      <div className={`flex flex-col items-center gap-3 text-center md:items-end md:text-right ${REVEAL}`}>
+        <h1 className="text-2xl tracking-tight md:text-3xl">Zaid Alsaheb</h1>
+        <p className="flex items-center gap-2 opacity-70">
+          <MapPin {...PIXEL_ICON} />
           Madrid, Spain
         </p>
-        <CopyEmail />
+        <SocialLinks className="mt-2" />
       </div>
+      <Koi />
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home
