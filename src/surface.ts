@@ -14,6 +14,3 @@ export const PANEL = 'overflow-hidden rounded-xl border border-fg/10'
 export const CHIP = 'flex items-center gap-2 rounded-lg border border-fg/10 bg-fg/5 px-2.5 py-1 text-sm'
 
 export const TAG = 'rounded-full border border-fg/20 px-2.5 py-0.5 text-xs opacity-80'
-
-/** 24px matches the pixel icons' grid so they stay crisp */
-export const PIXEL_ICON = { width: 24, height: 24, shapeRendering: 'crispEdges', 'aria-hidden': true } as const

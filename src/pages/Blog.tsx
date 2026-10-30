@@ -1,7 +1,7 @@
-import { ChevronDown } from 'pixelarticons/react/ChevronDown.js'
 import { lazy, Suspense, useState } from 'react'
+import Icon from '../components/Icon'
 import { blogPosts, formatPostDate, type BlogPost } from '../data/blog'
-import { LINK, MUTED, PIXEL_ICON, SECTION_TITLE, TAG } from '../surface'
+import { LINK, MUTED, SECTION_TITLE, TAG } from '../surface'
 
 // The markdown pipeline only loads once someone opens a post
 const BlogArticle = lazy(() => import('../components/BlogArticle'))
@@ -18,9 +18,9 @@ function Post({ post }: { post: BlogPost }) {
         <span className="flex flex-col gap-2">
           <span className="flex items-baseline justify-between gap-4">
             <span className={`text-lg font-bold ${LINK}`}>{post.title}</span>
-            <ChevronDown
-              {...PIXEL_ICON}
-              className="shrink-0 self-center opacity-50 transition-transform duration-300 group-open:rotate-180"
+            <Icon
+              name="chevronDown"
+              className="size-4 shrink-0 self-center opacity-50 transition-transform duration-300 group-open:rotate-180"
             />
           </span>
           <span className="leading-relaxed opacity-80">{post.description}</span>

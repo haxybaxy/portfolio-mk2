@@ -1,10 +1,8 @@
-import { Briefcase } from 'pixelarticons/react/Briefcase.js'
-import { ExternalLink } from 'pixelarticons/react/ExternalLink.js'
-import { Github } from 'pixelarticons/react/Github.js'
+import Icon from '../components/Icon'
 import TechChip from '../components/TechChip'
 import { jobs } from '../data/jobs'
 import { categoryOrder, projectAnchor, projects, type Project } from '../data/projects'
-import { LINK, MUTED, PANEL, PIXEL_ICON, SECTION_TITLE } from '../surface'
+import { LINK, MUTED, PANEL, SECTION_TITLE } from '../surface'
 
 // Listed categories first in their set order, then any others in the order they appear
 const categories = [...new Set([...categoryOrder, ...projects.map((project) => project.category)])]
@@ -26,12 +24,12 @@ function ProjectCard({ project }: { project: Project }) {
           <div className="flex shrink-0 gap-2">
             {project.github && (
               <a href={project.github} target="_blank" rel="noreferrer" aria-label={`${project.title} on GitHub`} className={ICON_LINK}>
-                <Github {...PIXEL_ICON} />
+                <Icon name="github" className="size-[1.125rem]" />
               </a>
             )}
             {project.link && (
               <a href={project.link} target="_blank" rel="noreferrer" aria-label={`Open ${project.title}`} className={ICON_LINK}>
-                <ExternalLink {...PIXEL_ICON} />
+                <Icon name="externalLink" className="size-[1.125rem]" />
               </a>
             )}
           </div>
@@ -41,7 +39,7 @@ function ProjectCard({ project }: { project: Project }) {
 
         {builtAt.map((job) => (
           <a key={job.id} href={`#job-${job.id}`} className={`inline-flex items-center gap-2 text-sm ${LINK}`}>
-            <Briefcase {...PIXEL_ICON} />
+            <Icon name="briefcase" />
             Built at {job.company}
           </a>
         ))}

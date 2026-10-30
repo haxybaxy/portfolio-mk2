@@ -15,7 +15,6 @@
     "@paper-design/shaders": "0.0.81",
     "@paper-design/shaders-react": "0.0.81",
     "@tailwindcss/vite": "^4.3.3",
-    "pixelarticons": "2.4.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-markdown": "^10.1.0",
@@ -23,6 +22,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "tailwindcss": "^4.3.3",
+    "teenyicons": "^0.4.1",
     "three": "^0.186.1"
   },
   "devDependencies": {

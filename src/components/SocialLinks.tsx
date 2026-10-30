@@ -1,20 +1,10 @@
-import { Check } from 'pixelarticons/react/Check.js'
-import { Github } from 'pixelarticons/react/Github.js'
-import { Linkedin } from 'pixelarticons/react/Linkedin.js'
-import { Mail } from 'pixelarticons/react/Mail.js'
 import { GITHUB_URL, LINKEDIN_URL } from '../contact'
 import { useCopyEmail } from '../hooks/useCopyEmail'
 import { ICON_MOTION } from '../motion'
+import Icon, { type IconName } from './Icon'
 
-const links = [
-  { label: 'LinkedIn', href: LINKEDIN_URL, Icon: Linkedin },
-  { label: 'GitHub', href: GITHUB_URL, Icon: Github },
-]
-
-const ITEM_CLASS = 'block cursor-pointer opacity-70 transition-opacity hover:opacity-100'
-
-// 24px matches the icons' 24×24 grid so pixels stay crisp
-const ICON_SIZE = { width: 24, height: 24, shapeRendering: 'crispEdges' } as const
+const ITEM = 'block cursor-pointer opacity-70 transition-opacity hover:opacity-100'
+const SIZE = 'size-5'
 
 /** Mail icon that copies the address, swapping to a check while "copied" */
 function CopyEmailIcon() {
@@ -26,11 +16,14 @@ function CopyEmailIcon() {
       onClick={copy}
       aria-label="Copy email address"
       title={copied ? 'Copied!' : 'Copy email'}
-      className={ITEM_CLASS}
+      className={ITEM}
     >
-      <span className="grid size-6 overflow-hidden" aria-hidden="true">
-        <Mail {...ICON_SIZE} className={`[grid-area:1/1] ${ICON_MOTION} ${copied ? 'translate-y-2 opacity-0' : ''}`} />
-        <Check {...ICON_SIZE} className={`[grid-area:1/1] ${ICON_MOTION} ${copied ? 'delay-150' : '-translate-y-2 opacity-0'}`} />
+      <span className={`grid ${SIZE} overflow-hidden`} aria-hidden="true">
+        <Icon name="mail" className={`${SIZE} [grid-area:1/1] ${ICON_MOTION} ${copied ? 'translate-y-2 opacity-0' : ''}`} />
+        <Icon
+          name="check"
+          className={`${SIZE} [grid-area:1/1] ${ICON_MOTION} ${copied ? 'delay-150' : '-translate-y-2 opacity-0'}`}
+        />
       </span>
       <span className="sr-only" aria-live="polite">
         {copied ? 'Copied!' : ''}
@@ -39,16 +32,21 @@ function CopyEmailIcon() {
   )
 }
 
+const links: { label: string; href: string; icon: IconName }[] = [
+  { label: 'GitHub', href: GITHUB_URL, icon: 'github' },
+  { label: 'LinkedIn', href: LINKEDIN_URL, icon: 'linkedin' },
+]
+
 function SocialLinks({ className = '' }: { className?: string }) {
   return (
-    <ul className={`flex items-center gap-3 ${className}`}>
+    <ul className={`flex items-center gap-5 ${className}`}>
       <li>
         <CopyEmailIcon />
       </li>
-      {links.map(({ label, href, Icon }) => (
+      {links.map(({ label, href, icon }) => (
         <li key={label}>
-          <a href={href} aria-label={label} title={label} target="_blank" rel="noreferrer" className={ITEM_CLASS}>
-            <Icon {...ICON_SIZE} aria-hidden="true" />
+          <a href={href} aria-label={label} title={label} target="_blank" rel="noreferrer" className={ITEM}>
+            <Icon name={icon} className={SIZE} />
           </a>
         </li>
       ))}

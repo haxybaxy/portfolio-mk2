@@ -1,10 +1,6 @@
-import { Close } from 'pixelarticons/react/Close.js'
-import { Menu } from 'pixelarticons/react/Menu.js'
-import { Moon } from 'pixelarticons/react/Moon.js'
-import { Sun } from 'pixelarticons/react/Sun.js'
 import { useEffect, useState } from 'react'
 import { useTheme } from '../hooks/useTheme'
-import { PIXEL_ICON } from '../surface'
+import Icon from './Icon'
 
 type NavItem = { id: string; label: string }
 
@@ -23,7 +19,7 @@ function ThemeToggle() {
       title={label}
       className={`${ICON_BUTTON} right-16 opacity-70 transition-opacity hover:opacity-100 md:right-5`}
     >
-      {dark ? <Sun {...PIXEL_ICON} /> : <Moon {...PIXEL_ICON} />}
+      <Icon name={dark ? 'sun' : 'moon'} className="size-5" />
     </button>
   )
 }
@@ -78,9 +74,8 @@ function Nav({ items, activeIndex }: { items: NavItem[]; activeIndex: number }) 
         aria-label={open ? 'Close menu' : 'Open menu'}
         className={`${ICON_BUTTON} right-5 md:hidden`}
       >
-        {/* 24px matches the icons' 24×24 grid so pixels stay crisp at rest */}
-        <Menu {...PIXEL_ICON} className={`[grid-area:1/1] ${MOTION} ${open ? 'rotate-90 opacity-0' : ''}`} />
-        <Close {...PIXEL_ICON} className={`[grid-area:1/1] ${MOTION} ${open ? '' : '-rotate-90 opacity-0'}`} />
+        <Icon name="menu" className={`size-5 [grid-area:1/1] ${MOTION} ${open ? 'rotate-90 opacity-0' : ''}`} />
+        <Icon name="close" className={`size-5 [grid-area:1/1] ${MOTION} ${open ? '' : '-rotate-90 opacity-0'}`} />
       </button>
 
       {/* Mobile: full-screen menu */}

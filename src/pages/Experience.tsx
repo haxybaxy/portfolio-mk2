@@ -1,8 +1,8 @@
-import { ArrowRight } from 'pixelarticons/react/ArrowRight.js'
+import Icon from '../components/Icon'
 import TechChip from '../components/TechChip'
 import { jobs } from '../data/jobs'
 import { projectAnchor } from '../data/projects'
-import { LINK, MUTED, PIXEL_ICON, SECTION_TITLE } from '../surface'
+import { LINK, MUTED, SECTION_TITLE } from '../surface'
 
 function Experience() {
   return (
@@ -29,7 +29,7 @@ function Experience() {
               {job.relatedProjects?.map((title) => (
                 <a key={title} href={`#${projectAnchor(title)}`} className={`inline-flex items-center gap-2 text-sm ${LINK}`}>
                   {title}
-                  <ArrowRight {...PIXEL_ICON} />
+                  <Icon name="arrowRight" />
                 </a>
               ))}
               <ul className="flex flex-wrap gap-2">
