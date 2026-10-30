@@ -1,7 +1,28 @@
 @import 'tailwindcss';
 
+/* Class-based theming: the pre-paint script in index.html puts .dark on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* fg/bg follow the theme; `inline` keeps utilities pointing at the live variables */
+@theme inline {
+  --color-fg: var(--fg);
+  --color-bg: var(--bg);
+}
+
+:root {
+  --bg: #fdfdfd;
+  --fg: #111111;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #000000;
+  --fg: #ffffff;
+  color-scheme: dark;
 }
 
 /* Rendered markdown in blog posts */
@@ -11,17 +32,18 @@
 
     & h2 { @apply mt-6 text-xl font-bold; }
     & h3 { @apply mt-4 text-lg font-bold; }
-    & a { @apply underline decoration-white/40 underline-offset-4 hover:decoration-white; }
+    & a { @apply underline decoration-fg/40 underline-offset-4 hover:decoration-fg; }
     & ul { @apply flex list-['→_'] flex-col gap-1 pl-6; }
     & ol { @apply flex list-decimal flex-col gap-1 pl-6; }
-    & blockquote { @apply border-l-2 border-white/30 pl-4 opacity-80; }
-    & :not(pre) > code { @apply rounded bg-white/10 px-1.5 py-0.5 text-[0.9em]; }
-    & pre { @apply overflow-x-auto rounded-xl border border-white/10 bg-black/50 p-4 text-sm; }
+    & blockquote { @apply border-l-2 border-fg/30 pl-4 opacity-80; }
+    & :not(pre) > code { @apply rounded bg-fg/10 px-1.5 py-0.5 text-[0.9em]; }
+    /* Code blocks keep the dark Catppuccin palette in both themes */
+    & pre { @apply overflow-x-auto rounded-xl border border-fg/10 bg-[#1e1e2e] p-4 text-sm text-[#cdd6f4]; }
     & table { @apply block w-full overflow-x-auto text-sm; }
-    & th, & td { @apply border border-white/15 px-3 py-2 text-left; }
-    & th { @apply bg-white/5; }
+    & th, & td { @apply border border-fg/15 px-3 py-2 text-left; }
+    & th { @apply bg-fg/5; }
     & img { @apply rounded-xl; }
-    & hr { @apply border-white/15; }
+    & hr { @apply border-fg/15; }
   }
 
   /* highlight.js classes from rehype-highlight, Catppuccin Mocha as on the old site */

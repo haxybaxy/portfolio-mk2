@@ -1,11 +1,32 @@
 import { Close } from 'pixelarticons/react/Close.js'
 import { Menu } from 'pixelarticons/react/Menu.js'
+import { Moon } from 'pixelarticons/react/Moon.js'
+import { Sun } from 'pixelarticons/react/Sun.js'
 import { useEffect, useState } from 'react'
-import TextFade from './TextFade'
+import { useTheme } from '../hooks/useTheme'
+import { PIXEL_ICON } from '../surface'
 
 type NavItem = { id: string; label: string }
 
 const MOTION = 'transition-[opacity,translate,rotate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
+const ICON_BUTTON = 'pointer-events-auto absolute top-5 z-10 grid size-10 cursor-pointer place-items-center'
+
+function ThemeToggle() {
+  const { dark, toggle } = useTheme()
+  const label = dark ? 'Switch to light theme' : 'Switch to dark theme'
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={label}
+      title={label}
+      className={`${ICON_BUTTON} right-16 opacity-70 transition-opacity hover:opacity-100 md:right-5`}
+    >
+      {dark ? <Sun {...PIXEL_ICON} /> : <Moon {...PIXEL_ICON} />}
+    </button>
+  )
+}
 
 function Nav({ items, activeIndex }: { items: NavItem[]; activeIndex: number }) {
   const [open, setOpen] = useState(false)
@@ -33,8 +54,7 @@ function Nav({ items, activeIndex }: { items: NavItem[]; activeIndex: number }) 
   return (
     <nav className="pointer-events-none fixed inset-x-0 top-0 z-20 flex justify-center p-6 text-sm">
       {/* Desktop: inline links */}
-      <div className="pointer-events-auto relative isolate hidden gap-6 md:flex">
-        <TextFade />
+      <div className="pointer-events-auto hidden gap-6 md:flex">
         {items.map(({ id, label }, i) => (
           <a
             key={id}
@@ -47,6 +67,8 @@ function Nav({ items, activeIndex }: { items: NavItem[]; activeIndex: number }) 
         ))}
       </div>
 
+      <ThemeToggle />
+
       {/* Mobile: toggle button, stays above the overlay so it doubles as the close button */}
       <button
         type="button"
@@ -54,31 +76,18 @@ function Nav({ items, activeIndex }: { items: NavItem[]; activeIndex: number }) 
         aria-expanded={open}
         aria-controls="mobile-menu"
         aria-label={open ? 'Close menu' : 'Open menu'}
-        className="pointer-events-auto absolute top-5 right-5 z-10 isolate grid size-10 cursor-pointer place-items-center md:hidden"
+        className={`${ICON_BUTTON} right-5 md:hidden`}
       >
-        <TextFade />
         {/* 24px matches the icons' 24×24 grid so pixels stay crisp at rest */}
-        <Menu
-          width={24}
-          height={24}
-          shapeRendering="crispEdges"
-          aria-hidden="true"
-          className={`[grid-area:1/1] ${MOTION} ${open ? 'rotate-90 opacity-0' : ''}`}
-        />
-        <Close
-          width={24}
-          height={24}
-          shapeRendering="crispEdges"
-          aria-hidden="true"
-          className={`[grid-area:1/1] ${MOTION} ${open ? '' : '-rotate-90 opacity-0'}`}
-        />
+        <Menu {...PIXEL_ICON} className={`[grid-area:1/1] ${MOTION} ${open ? 'rotate-90 opacity-0' : ''}`} />
+        <Close {...PIXEL_ICON} className={`[grid-area:1/1] ${MOTION} ${open ? '' : '-rotate-90 opacity-0'}`} />
       </button>
 
       {/* Mobile: full-screen menu */}
       <div
         id="mobile-menu"
         inert={!open}
-        className={`pointer-events-auto fixed inset-0 flex flex-col items-center justify-center gap-6 bg-black/40 backdrop-blur-xl md:hidden ${MOTION} ${open ? '' : 'pointer-events-none opacity-0'}`}
+        className={`pointer-events-auto fixed inset-0 flex flex-col items-center justify-center gap-6 bg-bg/80 backdrop-blur-xl md:hidden ${MOTION} ${open ? '' : 'pointer-events-none opacity-0'}`}
       >
         {items.map(({ id, label }, i) => (
           <a

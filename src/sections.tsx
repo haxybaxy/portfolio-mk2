@@ -66,7 +66,7 @@ export const sections: Section[] = [
   },
   {
     id: 'blog',
-    label: 'Blog',
+    label: 'Writing',
     Component: Blog,
     background: {
       colors: ['#ff4ecd', '#7cf4ff', '#4b6bff', '#1b0a3a'],

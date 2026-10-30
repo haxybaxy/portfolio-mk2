@@ -5,8 +5,8 @@ export type Project = {
   category: string
   github?: string
   link?: string
-  /** Tech name -> icon path under /icons */
-  icons: Record<string, string>
+  /** Technology names; icons are looked up by name in data/icons.ts */
+  tech: string[]
 }
 
 // Display order for category groups; anything not listed falls to the bottom
@@ -19,16 +19,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/skoll.webp',
     category: 'Startups',
     link: 'https://useskoll.com',
-    icons: {
-      'Next.js': '/icons/nextjs.svg',
-      Vite: '/icons/vite.svg',
-      AWS: '/icons/aws.svg',
-      Python: '/icons/python.svg',
-      FastAPI: '/icons/fastapi.svg',
-      LangGraph: '/icons/langgraph.svg',
-      LangFuse: '/icons/langfuse.svg',
-      Pinecone: '/icons/pinecone.svg',
-    },
+    tech: ['Next.js', 'Vite', 'AWS', 'Python', 'FastAPI', 'LangGraph', 'LangFuse', 'Pinecone'],
   },
   {
     title: 'Claude Tmux Status',
@@ -36,7 +27,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/claude-tmux-status.webp',
     category: 'Dev Tools',
     github: 'https://github.com/haxybaxy/claude-tmux-status',
-    icons: { Shell: '/icons/bash.svg' },
+    tech: ['Shell'],
   },
   {
     title: 'Holla at Your Boy',
@@ -44,7 +35,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/holla.webp',
     category: 'Dev Tools',
     github: 'https://github.com/haxybaxy/holla-at-your-boy',
-    icons: { 'Github Actions': '/icons/github.svg' },
+    tech: ['Github Actions'],
   },
   {
     title: 'Search Preview',
@@ -52,7 +43,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/searchpreview.webp',
     category: 'Dev Tools',
     github: 'https://github.com/haxybaxy/search-preview',
-    icons: { Typescript: '/icons/typescript.svg' },
+    tech: ['Typescript'],
   },
   {
     title: 'ClearSplit',
@@ -60,13 +51,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/clearsplit.webp',
     category: 'Startups',
     link: 'https://clearsplit.io',
-    icons: {
-      React: '/icons/react.svg',
-      Supabase: '/icons/supabase.svg',
-      LangChain: '/icons/langchain.svg',
-      NestJS: '/icons/nestjs.svg',
-      Railway: '/icons/railway.svg',
-    },
+    tech: ['React', 'Supabase', 'LangChain', 'NestJS', 'Railway'],
   },
   {
     title: 'Worktap!',
@@ -74,12 +59,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/worktap.webp',
     category: 'Startups',
     link: 'https://www.worktap.info/',
-    icons: {
-      Expo: '/icons/expo.svg',
-      'React Native': '/icons/react.svg',
-      Typescript: '/icons/typescript.svg',
-      Firebase: '/icons/firebase.svg',
-    },
+    tech: ['Expo', 'React Native', 'Typescript', 'Firebase'],
   },
   {
     title: 'Distributed Stock Market Prediction',
@@ -89,7 +69,7 @@ export const projects: Project[] = [
     category: 'University Projects',
     github: 'https://github.com/haxybaxy/hpc-stock-prediction',
     link: 'https://www.youtube.com/watch?v=bE9OQoD-mg0',
-    icons: { Python: '/icons/python.svg', Tensorflow: '/icons/tensorflow.svg', Cuda: '/icons/cuda.svg' },
+    tech: ['Python', 'Tensorflow', 'Cuda'],
   },
   {
     title: 'DeployPilot',
@@ -98,13 +78,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/deploypilot.webp',
     category: 'University Projects',
     link: 'https://www.youtube.com/watch?v=II6IIS46uPw',
-    icons: {
-      Docker: '/icons/docker.svg',
-      Python: '/icons/python.svg',
-      FastAPI: '/icons/fastapi.svg',
-      LangChain: '/icons/langchain.svg',
-      DigitalOcean: '/icons/digitalocean.svg',
-    },
+    tech: ['Docker', 'Python', 'FastAPI', 'LangChain', 'DigitalOcean'],
   },
   {
     title: 'Gaze Tracker',
@@ -113,7 +87,7 @@ export const projects: Project[] = [
     category: 'University Projects',
     github: 'https://github.com/haxybaxy/eyetracker',
     link: 'https://www.youtube.com/watch?v=JJY0FWCcJ8g',
-    icons: { Python: '/icons/python.svg', OpenCV: '/icons/opencv.svg' },
+    tech: ['Python', 'OpenCV'],
   },
   {
     title: 'FitWave',
@@ -121,15 +95,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/fitwave.webp',
     category: 'Startups',
     link: 'https://www.linkedin.com/feed/update/urn:li:activity:7273049653883924481/',
-    icons: {
-      Expo: '/icons/expo.svg',
-      Typescript: '/icons/typescript.svg',
-      'React Native': '/icons/react.svg',
-      Firebase: '/icons/firebase.svg',
-      Python: '/icons/python.svg',
-      LangChain: '/icons/langchain.svg',
-      Pinecone: '/icons/pinecone.svg',
-    },
+    tech: ['Expo', 'Typescript', 'React Native', 'Firebase', 'Python', 'LangChain', 'Pinecone'],
   },
   {
     title: 'Liesl',
@@ -137,12 +103,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/liesl.webp',
     category: 'Professional Projects',
     link: 'https://www.liesl.ch/',
-    icons: {
-      'React Native': '/icons/react.svg',
-      NextJS: '/icons/nextjs.svg',
-      NestJS: '/icons/nestjs.svg',
-      AWS: '/icons/aws.svg',
-    },
+    tech: ['React Native', 'NextJS', 'NestJS', 'AWS'],
   },
   {
     title: 'Remote Lab',
@@ -151,13 +112,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/remotelab.webp',
     category: 'Professional Projects',
     github: 'https://github.com/IE-Robotics-Lab/remote_lab',
-    icons: {
-      ROS: '/icons/ros.svg',
-      Docker: '/icons/docker.svg',
-      Python: '/icons/python.svg',
-      OpenCV: '/icons/opencv.svg',
-      Tensorflow: '/icons/tensorflow.svg',
-    },
+    tech: ['ROS', 'Docker', 'Python', 'OpenCV', 'Tensorflow'],
   },
   {
     title: 'X++ Assistant',
@@ -166,12 +121,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/xppcoder.webp',
     category: 'Professional Projects',
     github: 'https://github.com/haxybaxy/xppcoder',
-    icons: {
-      Python: '/icons/python.svg',
-      LangChain: '/icons/langchain.svg',
-      HuggingFace: '/icons/huggingface.svg',
-      Pinecone: '/icons/pinecone.svg',
-    },
+    tech: ['Python', 'LangChain', 'HuggingFace', 'Pinecone'],
   },
   {
     title: 'EC Language',
@@ -180,7 +130,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/eclang.webp',
     category: 'University Projects',
     github: 'https://github.com/haxybaxy/ec-lang',
-    icons: { C: '/icons/c.svg', CMake: '/icons/cmake.svg' },
+    tech: ['C', 'CMake'],
   },
   {
     title: 'Monsieur',
@@ -189,12 +139,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/monsieur.webp',
     category: 'Competitions',
     link: 'https://www.linkedin.com/feed/update/urn:li:activity:7327688977786785793/',
-    icons: {
-      'Next.js': '/icons/nextjs.svg',
-      LangGraph: '/icons/langgraph.svg',
-      FastAPI: '/icons/fastapi.svg',
-      Supabase: '/icons/supabase.svg',
-    },
+    tech: ['Next.js', 'LangGraph', 'FastAPI', 'Supabase'],
   },
   {
     title: 'Agentic Investment Tracker',
@@ -203,7 +148,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/tracknetic.webp',
     category: 'Competitions',
     link: 'https://www.linkedin.com/feed/update/urn:li:activity:7332082469791227905/',
-    icons: { React: '/icons/react.svg', LangChain: '/icons/langchain.svg', LangGraph: '/icons/langgraph.svg' },
+    tech: ['React', 'LangChain', 'LangGraph'],
   },
   {
     title: 'AI Hackathon 2023',
@@ -212,12 +157,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/aihackathon.webp',
     category: 'Competitions',
     github: 'https://github.com/haxybaxy/aihackathon2023',
-    icons: {
-      Python: '/icons/python.svg',
-      LangChain: '/icons/langchain.svg',
-      OpenAI: '/icons/openai.svg',
-      Pandas: '/icons/pandas.svg',
-    },
+    tech: ['Python', 'LangChain', 'OpenAI', 'Pandas'],
   },
   {
     title: 'IE Robotics Club Website',
@@ -225,14 +165,7 @@ export const projects: Project[] = [
     imageUrl: '/projectphotos/ierobotics.webp',
     category: 'University Projects',
     github: 'https://github.com/IERoboticsClub/club_website_v0',
-    icons: {
-      React: '/icons/react.svg',
-      Astro: '/icons/astro.svg',
-      'Node.js': '/icons/nodejs.svg',
-      'Express.js': '/icons/express.svg',
-      MongoDB: '/icons/mongodb.svg',
-      Docker: '/icons/docker.svg',
-    },
+    tech: ['React', 'Astro', 'Node.js', 'Express.js', 'MongoDB', 'Docker'],
   },
   {
     title: 'UNO',
@@ -241,14 +174,7 @@ export const projects: Project[] = [
     category: 'University Projects',
     // Carried over as-is from the old site, where the link and stack were copied from the club website entry
     github: 'https://github.com/IERoboticsClub/club_website_v0',
-    icons: {
-      React: '/icons/react.svg',
-      Astro: '/icons/astro.svg',
-      'Node.js': '/icons/nodejs.svg',
-      'Express.js': '/icons/express.svg',
-      MongoDB: '/icons/mongodb.svg',
-      Docker: '/icons/docker.svg',
-    },
+    tech: ['React', 'Astro', 'Node.js', 'Express.js', 'MongoDB', 'Docker'],
   },
 ]
 

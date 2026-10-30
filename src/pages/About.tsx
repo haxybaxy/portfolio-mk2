@@ -1,57 +1,55 @@
-import GlassWindow from '../components/GlassWindow'
+import TechChip from '../components/TechChip'
 import { skillCategories } from '../data/skills'
-import { CARD, PAGE_TITLE } from '../surface'
+import { MUTED, PANEL, SECTION_TITLE } from '../surface'
+
+const NOW = [
+  'Rebuilding this site from scratch',
+  'Reading about color science and getting distracted by OKLab',
+  'Learning to make pixel icons look good at any size',
+  'Drinking too much café con leche',
+]
 
 function About() {
   return (
-    <div className="flex w-full max-w-4xl flex-col items-center gap-10">
-      <h1 className={PAGE_TITLE}>About</h1>
+    <div className="flex w-full max-w-3xl flex-col gap-12">
+      <h2 className={SECTION_TITLE}>About</h2>
 
-      <div className={`${CARD} flex w-full flex-col items-center gap-6 p-6 sm:flex-row sm:items-start`}>
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
         <img
           src="/myphoto.jpeg"
           alt="Zaid Alsaheb"
-          className="size-40 shrink-0 rounded-xl object-cover sm:size-48"
+          className={`${PANEL} size-36 shrink-0 object-cover sm:size-44`}
           loading="lazy"
         />
-        <div className="flex flex-col gap-4 leading-relaxed">
+        <div className="flex flex-col gap-5 leading-relaxed">
           <p>
-            I am currently an <strong>undergrad student at IE University</strong>, pursuing a bachelors degree in{' '}
-            <strong>Computer Science and Artificial Intelligence</strong>. I am very passionate about technology and all
-            of its interconnected facets, which drives me to learn about anything and everything.
+            I am currently an undergrad student at IE University, pursuing a bachelors degree in Computer Science and
+            Artificial Intelligence. I am very passionate about technology and all of its interconnected facets, which
+            drives me to learn about anything and everything.
           </p>
-          <p className="opacity-80">Here are some of the technologies that I&apos;ve worked with:</p>
+          <div className="flex flex-col gap-2">
+            <span className={MUTED}>now</span>
+            <ul className="flex list-['→_'] flex-col gap-1 pl-6">
+              {NOW.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div className="grid w-full gap-4 sm:grid-cols-2">
+      <div className="flex flex-col gap-6">
         {skillCategories.map((category) => (
-          <div key={category.title} className={`${CARD} p-5`}>
-            <h2 className="mb-3 font-bold">{category.title}</h2>
+          <div key={category.title} className="flex flex-col gap-3">
+            <h3 className={MUTED}>{category.title}</h3>
             <ul className="flex flex-wrap gap-2">
               {category.skills.map((skill) => (
-                <li
-                  key={skill.name}
-                  className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-sm"
-                >
-                  <img src={skill.icon} alt="" className="size-4" loading="lazy" />
-                  {skill.name}
-                </li>
+                <TechChip key={skill} name={skill} />
               ))}
             </ul>
           </div>
         ))}
       </div>
-
-      <GlassWindow title="now.txt">
-        <p className="mb-3 opacity-70">~ ❯ cat now.txt</p>
-        <ul className="flex flex-col gap-2">
-          <li>→ Rebuilding this site from scratch, one shader at a time</li>
-          <li>→ Reading about color science and getting distracted by OKLab</li>
-          <li>→ Learning to make pixel icons look good at any size</li>
-          <li>→ Drinking too much café con leche</li>
-        </ul>
-      </GlassWindow>
     </div>
   )
 }

@@ -1,63 +1,64 @@
 import { ChevronDown } from 'pixelarticons/react/ChevronDown.js'
 import { lazy, Suspense, useState } from 'react'
-import { blogPosts, formatPostDate } from '../data/blog'
-import { CARD, PAGE_TITLE, PIXEL_ICON, TAG } from '../surface'
+import { blogPosts, formatPostDate, type BlogPost } from '../data/blog'
+import { LINK, MUTED, PIXEL_ICON, SECTION_TITLE, TAG } from '../surface'
 
 // The markdown pipeline only loads once someone opens a post
 const BlogArticle = lazy(() => import('../components/BlogArticle'))
 
-function Blog() {
-  const [openSlug, setOpenSlug] = useState<string | null>(null)
+function Post({ post }: { post: BlogPost }) {
+  const [open, setOpen] = useState(false)
 
   return (
-    <div className="flex w-full max-w-3xl flex-col items-center gap-10">
-      <h1 className={PAGE_TITLE}>Blog</h1>
+    <details className="group" onToggle={(event) => setOpen(event.currentTarget.open)}>
+      <summary className="grid cursor-pointer list-none gap-x-8 gap-y-2 sm:grid-cols-[10rem_1fr] [&::-webkit-details-marker]:hidden">
+        <time dateTime={post.date} className={MUTED}>
+          {formatPostDate(post.date)}
+        </time>
+        <span className="flex flex-col gap-2">
+          <span className="flex items-baseline justify-between gap-4">
+            <span className={`text-lg font-bold ${LINK}`}>{post.title}</span>
+            <ChevronDown
+              {...PIXEL_ICON}
+              className="shrink-0 self-center opacity-50 transition-transform duration-300 group-open:rotate-180"
+            />
+          </span>
+          <span className="leading-relaxed opacity-80">{post.description}</span>
+          {post.tags.length > 0 && (
+            <span className="flex flex-wrap gap-2 pt-1">
+              {post.tags.map((tag) => (
+                <span key={tag} className={TAG}>
+                  {tag}
+                </span>
+              ))}
+            </span>
+          )}
+        </span>
+      </summary>
+      {open && (
+        <div className="mt-6 border-l border-fg/15 pl-5 sm:ml-[calc(10rem+2rem)]">
+          <Suspense fallback={<p className="opacity-70">Loading…</p>}>
+            <BlogArticle body={post.body} />
+          </Suspense>
+        </div>
+      )}
+    </details>
+  )
+}
+
+function Blog() {
+  return (
+    <div className="flex w-full max-w-3xl flex-col gap-12">
+      <h2 className={SECTION_TITLE}>Writing</h2>
 
       {blogPosts.length === 0 && <p className="opacity-70">Nothing published yet.</p>}
 
-      <ul className="flex w-full flex-col gap-4">
-        {blogPosts.map((post) => {
-          const open = post.slug === openSlug
-          return (
-            <li key={post.slug} id={`post-${post.slug}`} className={`${CARD} scroll-mt-24`}>
-              <button
-                type="button"
-                onClick={() => setOpenSlug(open ? null : post.slug)}
-                aria-expanded={open}
-                aria-controls={`post-body-${post.slug}`}
-                className="flex w-full cursor-pointer flex-col gap-2 p-6 text-left"
-              >
-                <span className="flex items-center gap-3 text-sm opacity-70">
-                  <time dateTime={post.date}>{formatPostDate(post.date)}</time>
-                  {post.draft && <span className={TAG}>draft</span>}
-                  <ChevronDown
-                    {...PIXEL_ICON}
-                    className={`ml-auto transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-                  />
-                </span>
-                <span className="text-xl font-bold">{post.title}</span>
-                <span className="leading-relaxed opacity-85">{post.description}</span>
-                {post.tags.length > 0 && (
-                  <span className="flex flex-wrap gap-2 pt-1">
-                    {post.tags.map((tag) => (
-                      <span key={tag} className={TAG}>
-                        {tag}
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </button>
-
-              {open && (
-                <div id={`post-body-${post.slug}`} className="border-t border-white/10 p-6">
-                  <Suspense fallback={<p className="opacity-70">Loading…</p>}>
-                    <BlogArticle body={post.body} />
-                  </Suspense>
-                </div>
-              )}
-            </li>
-          )
-        })}
+      <ul className="flex flex-col gap-10">
+        {blogPosts.map((post) => (
+          <li key={post.slug} id={`post-${post.slug}`} className="scroll-mt-24">
+            <Post post={post} />
+          </li>
+        ))}
       </ul>
     </div>
   )

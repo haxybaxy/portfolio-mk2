@@ -14,7 +14,7 @@ function Koi({ className = '' }: { className?: string }) {
       role="img"
       aria-label="A koi fish drawn in ASCII characters"
       style={{ fontSize: FONT_SIZE }}
-      className={`font-mono leading-none whitespace-pre text-white/50 antialiased [font-variant-ligatures:none] ${className}`}
+      className={`font-mono leading-none whitespace-pre text-fg/60 antialiased [font-variant-ligatures:none] ${className}`}
     >
       {KOI}
     </pre>
