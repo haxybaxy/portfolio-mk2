@@ -46,19 +46,19 @@ function App() {
 
   return (
     <>
-      <Nav items={sections} activeId={postSlug ? 'writing' : sections[activeIndex].id} />
+      <Nav items={sections} activeId={postSlug ? '' : sections[activeIndex].id} />
       {postSlug ? (
         <main className="flex min-h-svh flex-col items-center px-6 pt-28 pb-24">
           <Post slug={postSlug} />
         </main>
       ) : (
         <main>
-          {sections.map(({ id, Component }) => (
+          {sections.map(({ id, Component, centered }) => (
             <section
               key={id}
               id={id}
-              // Only the hero is centred; content sections anchor to the top so expanding rows only grow downwards
-              className={`flex min-h-svh flex-col items-center px-6 ${id === 'home' ? 'justify-center py-24' : 'pt-28 pb-24'}`}
+              // Content sections anchor to the top so expanding rows only grow downwards
+              className={`flex min-h-svh flex-col items-center px-6 ${centered ? 'justify-center py-24' : 'pt-28 pb-24'}`}
             >
               <Component />
             </section>

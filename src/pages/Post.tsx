@@ -16,8 +16,8 @@ function Post({ slug }: { slug: string }) {
   }, [post])
 
   const back = (
-    <a href="#writing" className={`inline-flex items-center gap-2 text-sm ${LINK}`}>
-      <span aria-hidden="true">←</span> Writing
+    <a href="#home" className={`inline-flex items-center gap-2 text-sm ${LINK}`}>
+      <span aria-hidden="true">←</span> Back
     </a>
   )
 
