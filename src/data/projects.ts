@@ -3,6 +3,8 @@ export type Project = {
   description: string;
   imageUrl: string;
   category: string;
+  /** Shown under the default "Featured" filter */
+  featured?: boolean;
   github?: string;
   link?: string;
   /** Technology names; icons are looked up by name in data/icons.ts */
@@ -21,6 +23,7 @@ export const categoryOrder = [
 export const projects: Project[] = [
   {
     title: "Skoll",
+    featured: true,
     description:
       "World's first AI GTM Engineer. Aims to link outreach tools, enrichment tools and CRMs autonomously.",
     imageUrl: "/projectphotos/skoll.webp",
@@ -39,6 +42,7 @@ export const projects: Project[] = [
   },
   {
     title: "Claude Tmux Status",
+    featured: true,
     description:
       "Claude Code plugin to indicate agent status and project in the vanilla tmux status bar",
     imageUrl: "/projectphotos/claude-tmux-status.webp",
@@ -65,6 +69,7 @@ export const projects: Project[] = [
   },
   {
     title: "ClearSplit",
+    featured: true,
     description: "Financial tooling for property managers.",
     imageUrl: "/projectphotos/clearsplit.webp",
     category: "Startups",
@@ -118,6 +123,7 @@ export const projects: Project[] = [
   },
   {
     title: "Liesl",
+    featured: true,
     description:
       "Dog sitting and walking marketplace in Switzerland, released and maintained during my time at MVST",
     imageUrl: "/projectphotos/liesl.webp",
@@ -127,6 +133,7 @@ export const projects: Project[] = [
   },
   {
     title: "Remote Lab",
+    featured: true,
     description:
       "Remote Lab access for users to control the IE Robotics Lab robots from anywhere in the world. Contains ROS package for ArUco tag detection with OpenCV and syncs coordinates with OptiTrack System",
     imageUrl: "/projectphotos/remotelab.webp",
@@ -136,6 +143,7 @@ export const projects: Project[] = [
   },
   {
     title: "X++ Assistant",
+    featured: true,
     description:
       "Extremely proficient coding assistant for the obscure X++ language in Dynamics 365 Finance and Operations. Currently deployed at Dynamics Innovations.",
     imageUrl: "/projectphotos/xppcoder.webp",
@@ -198,10 +206,7 @@ export const projects: Project[] = [
   },
 ];
 
-/** "X++ Assistant" -> "project-x-assistant", used as the card's anchor id */
-export function projectAnchor(title: string) {
-  return `project-${title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "")}`;
+/** "X++ Assistant" -> "x-assistant", the project's URL segment */
+export function projectSlug(title: string) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
