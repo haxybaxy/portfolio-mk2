@@ -55,6 +55,7 @@ const SIMPLE: Record<string, Slug> = {
   astrojs: 'astro',
   flutter: 'flutter',
   go: 'go',
+  lua: 'lua',
   googlecloud: 'googlecloud',
   googlecloudplatform: 'googlecloud',
   raspberrypi: 'raspberrypi',

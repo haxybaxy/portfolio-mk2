@@ -17,8 +17,7 @@ export const categoryOrder = [
   "Professional Projects",
   "Dev Tools",
   "University Projects",
-  "Competitions",
-];
+  "Competitions", "Miscellaneous"];
 
 export const projects: Project[] = [
   {
@@ -41,8 +40,23 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: "Rex Sessionizer",
+    description: "Project picker for Rex: one key, a fuzzy list of your project directories, a session for whichever you pick. Ported from tmux-sessionizer.",
+    imageUrl: "/projectphotos/rex-sessionizer.png",
+    category: "Dev Tools",
+    github: "https://github.com/haxybaxy/rex-sessionizer",
+    tech: ["Lua", "Shell"],
+  },
+  {
+    title: "Rex Worktrunk",
+    description: "Git worktree pickers for Rex, driven by worktrunk: switch to or create a worktree from one key, remove one from another, a Rex session per worktree. Ported from herdr-worktrunk.",
+    imageUrl: "/projectphotos/rex-worktrunk.png",
+    category: "Dev Tools",
+    github: "https://github.com/haxybaxy/rex-worktrunk",
+    tech: ["Lua", "Shell"],
+  },
+  {
     title: "Claude Tmux Status",
-    featured: true,
     description:
       "Claude Code plugin to indicate agent status and project in the vanilla tmux status bar",
     imageUrl: "/projectphotos/claude-tmux-status.webp",
@@ -143,7 +157,6 @@ export const projects: Project[] = [
   },
   {
     title: "X++ Assistant",
-    featured: true,
     description:
       "Extremely proficient coding assistant for the obscure X++ language in Dynamics 365 Finance and Operations. Currently deployed at Dynamics Innovations.",
     imageUrl: "/projectphotos/xppcoder.webp",
@@ -203,6 +216,24 @@ export const projects: Project[] = [
     // Carried over as-is from the old site, where the link and stack were copied from the club website entry
     github: "https://github.com/IERoboticsClub/club_website_v0",
     tech: ["React", "Astro", "Node.js", "Express.js", "MongoDB", "Docker"],
+  },
+  {
+    title: "Groupdle",
+    featured: true,
+    description: "Groupdle ranks your friends on Wordle, Connections, Strands, Minute Cryptic and 102 more daily puzzles: results logged as you play, points over a season.",
+    imageUrl: "/projectphotos/groupdle.png",
+    category: "Miscellaneous",
+    link: "https://groupdle.com",
+    tech: [],
+  },
+  {
+    title: "Video Pedal",
+    featured: true,
+    description: "A loop pedal for your webcam: hold a key to record, release to loop, press to go live. Outputs a virtual camera.",
+    imageUrl: "/projectphotos/video-pedal.png",
+    category: "Miscellaneous",
+    github: "https://github.com/haxybaxy/video-pedal",
+    tech: ["Python"],
   },
 ];
 
