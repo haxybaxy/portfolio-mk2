@@ -77,6 +77,10 @@ export const blogPosts: BlogPost[] = Object.entries(modules)
   .filter((post) => !post.draft || !import.meta.env.PROD)
   .sort((a, b) => b.date.localeCompare(a.date))
 
+/** Posts live at #/writing/<slug>; the slash keeps them distinct from the page's #writing anchor */
+export const postHref = (slug: string) => `#/writing/${encodeURIComponent(slug)}`
+export const POST_ROUTE = /^#\/writing\/([^/]+)$/
+
 /** "2026-08-11" -> "August 11, 2026", pinned to UTC so it never drifts a day */
 export function formatPostDate(date: string) {
   return new Date(`${date}T00:00:00Z`).toLocaleDateString('en-US', {
