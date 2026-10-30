@@ -5,8 +5,7 @@ import { jobs } from '../data/jobs'
 import { projectSlug } from '../data/projects'
 import { LINK, MUTED, SECTION_TITLE } from '../surface'
 
-// Latest roles open by default; older ones are one click away
-const OPEN_BY_DEFAULT = 3
+// Every role starts collapsed; the row shows dates, role and company
 const latestFirst = jobs.toReversed()
 
 /** Following a #job-<id> link also opens that role; the browser handles the scroll */
@@ -31,9 +30,9 @@ function Experience() {
       <h2 className={SECTION_TITLE}>Experience</h2>
 
       <ol className="flex flex-col gap-6">
-        {latestFirst.map((job, i) => (
+        {latestFirst.map((job) => (
           <li key={job.id} id={`job-${job.id}`} className="scroll-mt-28">
-            <details open={i < OPEN_BY_DEFAULT} className="group">
+            <details className="group">
               <summary className="grid cursor-pointer list-none gap-x-8 gap-y-1 sm:grid-cols-[10rem_1fr] [&::-webkit-details-marker]:hidden">
                 {/* Inline on phones, two stacked lines beside the role on wider screens */}
                 <span className={`${MUTED} sm:flex sm:flex-col`}>
