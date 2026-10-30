@@ -4,7 +4,7 @@ type SkillCategory = {
 }
 
 export const skillCategories: SkillCategory[] = [
-  { title: 'Languages', skills: ['Python', 'JavaScript', 'TypeScript', 'C', 'C++', 'C#'] },
+  { title: 'Languages', skills: ['Python', 'JavaScript', 'TypeScript', 'C', 'C++', 'Go'] },
   {
     title: 'Frameworks & Libraries',
     skills: ['React', 'React Native', 'Next.js', 'Node.js', 'Express.js', 'NestJS', 'Expo', 'Django', 'FastAPI'],
