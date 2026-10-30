@@ -5,13 +5,13 @@ import briefcase from 'teenyicons/outline/briefcase.svg?raw'
 import down from 'teenyicons/outline/down.svg?raw'
 import envelope from 'teenyicons/outline/envelope.svg?raw'
 import github from 'teenyicons/outline/github.svg?raw'
+import link from 'teenyicons/outline/link.svg?raw'
 import linkedin from 'teenyicons/outline/linkedin.svg?raw'
 import menu from 'teenyicons/outline/menu.svg?raw'
 import moon from 'teenyicons/outline/moon.svg?raw'
 import pin from 'teenyicons/outline/pin.svg?raw'
 import sun from 'teenyicons/outline/sun.svg?raw'
 import tick from 'teenyicons/outline/tick.svg?raw'
-import topRight from 'teenyicons/outline/top-right.svg?raw'
 import x from 'teenyicons/outline/x.svg?raw'
 
 const ICONS = {
@@ -21,7 +21,7 @@ const ICONS = {
   check: tick,
   chevronDown: down,
   close: x,
-  externalLink: topRight,
+  externalLink: link,
   github,
   linkedin,
   mail: envelope,
