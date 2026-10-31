@@ -95,9 +95,9 @@ function About() {
             <Peek href="https://useskoll.com" card={CARDS.skoll}>
               Skoll
             </Peek>
-            , where I built an AI native platform for GTM, reaching{" "}
-            <b>$160K ARR</b>. After parting ways with that, I've been building
-            GTM automations for companies under my own practice.
+            , where I built an AI native platform for GTM. After parting ways
+            with that, I've been building GTM automations for companies under my
+            own practice.
           </p>
           <p>
             On a more personal note, I'm really into{" "}
