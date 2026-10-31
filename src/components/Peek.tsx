@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState, type PointerEvent, type FocusEvent, type ReactNode } from 'react'
 import { FADE } from '../motion'
 import { LINK } from '../surface'
 
@@ -37,7 +37,14 @@ function wikiCard(title: string) {
 /** A link that shows a small preview card (photo and caption) while hovered or focused */
 function Peek({ href, children, className = '', wiki, card, image, tall = false }: Props) {
   const [open, setOpen] = useState(false)
+  // Cards open above the link unless that would run past the top of the viewport (or under the fixed nav)
+  const [below, setBelow] = useState(false)
   const [resolved, setResolved] = useState<Card | null>(card ?? null)
+
+  const show = (event: PointerEvent<HTMLAnchorElement> | FocusEvent<HTMLAnchorElement>) => {
+    setBelow(event.currentTarget.getBoundingClientRect().top < (tall ? 440 : 300))
+    setOpen(true)
+  }
 
   useEffect(() => {
     if (!open || resolved || !wiki) return
@@ -58,10 +65,10 @@ function Peek({ href, children, className = '', wiki, card, image, tall = false 
         rel="noreferrer"
         className={`${LINK} ${className}`}
         onPointerEnter={(event) => {
-          if (event.pointerType !== 'touch') setOpen(true)
+          if (event.pointerType !== 'touch') show(event)
         }}
         onPointerLeave={() => setOpen(false)}
-        onFocus={() => setOpen(true)}
+        onFocus={show}
         onBlur={() => setOpen(false)}
       >
         {children}
@@ -69,10 +76,12 @@ function Peek({ href, children, className = '', wiki, card, image, tall = false 
       {open && resolved && (
         <span
           role="tooltip"
-          className={`pointer-events-none absolute bottom-full left-1/2 z-30 mb-2 w-56 max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-lg border border-fg/15 bg-bg p-1.5 font-normal not-italic shadow-lg shadow-black/20 ${FADE} starting:translate-y-1 starting:opacity-0`}
+          className={`pointer-events-none absolute left-1/2 z-30 w-56 max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-lg border border-fg/15 bg-bg p-1.5 font-normal not-italic shadow-lg shadow-black/20 ${FADE} ${
+            below ? 'top-full mt-2 starting:-translate-y-1' : 'bottom-full mb-2 starting:translate-y-1'
+          } starting:opacity-0`}
         >
           {resolved.image && (
-            <img src={resolved.image} alt="" className={`w-full rounded-md object-cover ${tall ? 'aspect-[4/5]' : 'aspect-[16/10]'}`} />
+            <img src={resolved.image} alt="" className={`w-full rounded-md object-cover ${tall ? 'aspect-[2/3]' : 'aspect-[16/10]'}`} />
           )}
           <span className="block px-1 pt-1.5 pb-0.5 text-xs leading-snug opacity-80">{resolved.caption}</span>
         </span>
