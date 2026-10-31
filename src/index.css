@@ -4,7 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* Arabic has no glyphs in JetBrains Mono, so those characters fall through to Plex Arabic */
+  --font-mono: 'JetBrains Mono', 'IBM Plex Sans Arabic', ui-monospace, monospace;
 
   /* Motion: one curve (quick start, long soft landing), one quiet default duration */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);

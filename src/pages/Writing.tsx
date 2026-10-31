@@ -4,6 +4,9 @@ import { LINK, MUTED, SECTION_TITLE } from '../surface'
 function Writing() {
   return (
     <div className="flex w-full max-w-3xl flex-col gap-10">
+      <a href="#about" className={`inline-flex items-center gap-2 self-start text-sm ${LINK}`}>
+        <span aria-hidden="true">←</span> Back
+      </a>
       <h2 className={SECTION_TITLE}>Writing</h2>
 
       {blogPosts.length === 0 && <p className="opacity-70">Nothing published yet.</p>}

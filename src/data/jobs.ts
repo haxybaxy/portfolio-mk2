@@ -175,7 +175,7 @@ export const jobs: Job[] = [
       "TypeScript",
       "CI/CD",
     ],
-    relatedProjects: ["Liesl"],
+    relatedProjects: ["ClearSplit"],
   },
   {
     id: "ieu-research",
