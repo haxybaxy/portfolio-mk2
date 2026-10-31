@@ -1,4 +1,4 @@
-import Peek from "../components/Peek";
+import Peek, { type Card } from "../components/Peek";
 import Reveal from "../components/Reveal";
 import { MUTED, PANEL, SECTION_TITLE } from "../surface";
 
@@ -11,23 +11,41 @@ const NOW = [
 // Two columns of two photos; the crops are chosen so both columns end on the same line
 const PHOTO_COLUMNS = [
   [
-    { src: "/torre-de-hercules.jpeg", caption: "Torre de Hércules, A Coruña", aspect: "aspect-[3/4]" },
-    { src: "/corne.jpeg", caption: "Corne keyboard", aspect: "aspect-[2/1]" },
+    {
+      src: "/torre-de-hercules.webp",
+      caption: "Torre de Hércules, A Coruña",
+      aspect: "aspect-[3/4]",
+    },
+    {
+      src: "/corne.webp",
+      caption: "My custom DIY Corne keyboard",
+      aspect: "aspect-[2/1]",
+    },
   ],
   [
-    { src: "/myphoto.jpeg", caption: "Me", aspect: "aspect-square" },
-    { src: "/fatteh.jpg", caption: "Fatteh", aspect: "aspect-[6/5]" },
+    { src: "/myphoto.webp", caption: "Me", aspect: "aspect-square" },
+    {
+      src: "/fatteh.webp",
+      caption: "A beautiful plate of Fatteh",
+      aspect: "aspect-[6/5]",
+    },
   ],
 ];
 
-// Hand-picked Wikimedia Commons photos for cards whose article lead image is a logo, a diagram or a crop
-const IMAGES = {
-  ieTower: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Madrid_-_CTBA%2C_Torre_Caleido_01.jpg/960px-Madrid_-_CTBA%2C_Torre_Caleido_01.jpg", // File:Madrid - CTBA, Torre Caleido 01.jpg (CC0)
-  ribeye: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/The_Food_at_Davids_Kitchen_061.jpg/960px-The_Food_at_Davids_Kitchen_061.jpg", // File:The Food at Davids Kitchen 061.jpg (CC BY-SA 2.0)
-  overheadPress: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Attractive_sporty_woman_doing_overhead_press_in_gym_with_barbell.jpg/960px-Attractive_sporty_woman_doing_overhead_press_in_gym_with_barbell.jpg", // File:Attractive sporty woman doing overhead press in gym with barbell.jpg (CC BY 2.0)
-};
-
-const SKOLL = { image: "/projectphotos/skoll.webp", caption: "Skoll, an AI go-to-market engineer. My last venture." };
+// Hover cards for words in the text. Edit the captions here.
+// ribeye.webp: "The Food at Davids Kitchen 061" by David Reber, CC BY-SA 2.0; zen.webp: "Ryoanji rock garden 857", CC BY-SA 3.0 (both Wikimedia Commons)
+const CARDS = {
+  amman: { image: "/amman.webp", caption: "Amman, Jordan." },
+  ieTower: { image: "/ietower.webp", caption: "The IE Tower in Madrid.", tall: true },
+  skoll: {
+    image: "/projectphotos/skoll.webp",
+    caption: "Skoll, an AI go-to-market engineer. My last venture.",
+  },
+  ribeye: { image: "/ribeye.webp", caption: "Ribeye steak." },
+  chickenLiver: { image: "/chicken-liver.webp", caption: "Chicken liver sandwich.", tall: true },
+  overheadPress: { image: "/overhead-press.webp", caption: "Overhead press." },
+  zen: { image: "/zen.webp", caption: "The rock garden at Ryōan-ji, Kyoto." },
+} satisfies Record<string, Card>;
 
 function About() {
   return (
@@ -36,15 +54,18 @@ function About() {
         <h2 className={SECTION_TITLE}>About</h2>
       </Reveal>
 
-      <Reveal delay={80} className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:items-start md:gap-12">
+      <Reveal
+        delay={80}
+        className="grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:items-start md:gap-12"
+      >
         <div className="flex flex-col gap-5 leading-relaxed">
           <p>
             I'm a software developer from{" "}
-            <Peek href="https://en.wikipedia.org/wiki/Amman" wiki="Amman" className="font-bold">
+            <Peek card={CARDS.amman} className="font-bold">
               Amman, Jordan
             </Peek>
             . I studied Computer Science and AI at{" "}
-            <Peek href="https://www.ie.edu/university/" wiki="IE_University" image={IMAGES.ieTower} tall>
+            <Peek href="https://www.ie.edu/university/" card={CARDS.ieTower}>
               IE University
             </Peek>{" "}
             in Madrid, and I currently live there.
@@ -52,7 +73,7 @@ function About() {
           <p>
             I've founded and scaled a bunch of companies from 0 to serving B2B
             customers in production. My last venture was{" "}
-            <Peek href="https://useskoll.com" card={SKOLL}>
+            <Peek href="https://useskoll.com" card={CARDS.skoll}>
               Skoll
             </Peek>
             , where I built an AI native platform for GTM, reaching{" "}
@@ -61,22 +82,16 @@ function About() {
           </p>
           <p>
             On a more personal note, I'm really into{" "}
-            <Peek href="https://en.wikipedia.org/wiki/Rib_eye_steak" wiki="Rib_eye_steak" image={IMAGES.ribeye} className="italic">
+            <Peek card={CARDS.ribeye} className="italic">
               ribeye steaks
             </Peek>
             ,{" "}
-            <Peek href="https://en.wikipedia.org/wiki/Liver_(food)" wiki="Liver_(food)" image="/chicken-liver.jpg" tall className="italic">
+            <Peek card={CARDS.chickenLiver} className="italic">
               chicken liver sandwiches
             </Peek>
             , computers, productivity workflows,{" "}
-            <Peek href="https://en.wikipedia.org/wiki/Overhead_press" wiki="Overhead_press" image={IMAGES.overheadPress} tall>
-              overhead pressing
-            </Peek>
-            , and{" "}
-            <Peek href="https://en.wikipedia.org/wiki/Zen" wiki="Zen">
-              zen
-            </Peek>
-            .
+            <Peek card={CARDS.overheadPress}>overhead pressing</Peek>, and{" "}
+            <Peek card={CARDS.zen}>zen</Peek>.
           </p>
           <div className="flex flex-col gap-2">
             <span className={MUTED}>now</span>
@@ -101,7 +116,9 @@ function About() {
                     loading="lazy"
                     decoding="async"
                   />
-                  <figcaption className="text-xs leading-snug opacity-60">{photo.caption}</figcaption>
+                  <figcaption className="text-xs leading-snug opacity-60">
+                    {photo.caption}
+                  </figcaption>
                 </figure>
               ))}
             </div>
