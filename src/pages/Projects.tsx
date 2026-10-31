@@ -1,9 +1,10 @@
-import { useEffect, useState, type TransitionEvent } from 'react'
+import { useEffect, useState } from 'react'
 import Icon from '../components/Icon'
 import Reveal from '../components/Reveal'
 import TechChip from '../components/TechChip'
 import { jobs } from '../data/jobs'
 import { categoryOrder, projectSlug, projects, type Project } from '../data/projects'
+import { reducedMotion } from '../motion'
 import { LINK, MUTED, PANEL, SECTION_TITLE } from '../surface'
 
 // Listed categories first in their set order, then any others in the order they appear
@@ -59,9 +60,8 @@ function ProjectDetail({ project }: { project: Project }) {
   )
 }
 
-// Desktop preview layers kept while their fades overlap: enough for a pointer sweeping the list every ~40ms
-const PREVIEW_LAYERS = 6
-type Layer = { id: number; project: Project }
+// Desktop preview swap: fade the current detail out for this long, then show the new one and fade it in
+const PREVIEW_OUT_MS = 120
 
 function Projects() {
   const [filter, setFilter] = useState<Filter>('Featured')
@@ -102,15 +102,16 @@ function Projects() {
   const current = visible.includes(selected) ? selected : visible[0]
   const previewed = peek ?? current
 
-  // Desktop preview: each change stacks a new layer that fades in over the still-opaque last one, so a pointer sweeping
-  // the list only retargets fades. Once the top layer is opaque (its transitionend) the ones beneath are dropped.
-  const [layers, setLayers] = useState<Layer[]>(() => [{ id: 0, project: previewed }])
-  const top = layers[layers.length - 1]
-  if (top.project !== previewed) setLayers([...layers.slice(1 - PREVIEW_LAYERS), { id: top.id + 1, project: previewed }])
-  const settle = (event: TransitionEvent<HTMLDivElement>) => {
-    // Links inside the layer have their own transitions; only the layer's fade counts
-    if (event.target === event.currentTarget && event.propertyName === 'opacity') setLayers((stack) => stack.slice(-1))
-  }
+  // Desktop preview: never show two projects at once. While `displayed` lags `previewed` the pane is faded out; the
+  // swap lands after the fade, and every further change while scanning just pushes it back, so the pane stays dim
+  // until the pointer settles and then fades in on the final project.
+  const [displayed, setDisplayed] = useState<Project>(() => previewed)
+  const hiding = displayed !== previewed
+  useEffect(() => {
+    if (!hiding) return
+    const timer = window.setTimeout(() => setDisplayed(previewed), reducedMotion() ? 0 : PREVIEW_OUT_MS)
+    return () => window.clearTimeout(timer)
+  }, [hiding, previewed])
 
   const changeFilter = (option: Filter) => {
     if (option === filter) return
@@ -207,20 +208,8 @@ function Projects() {
         </div>
 
         <aside className="sticky top-28 hidden self-start md:block">
-          <div className="grid">
-            {layers.map((layer, index) => {
-              const isTop = index === layers.length - 1
-              return (
-                <div
-                  key={layer.id}
-                  inert={!isTop}
-                  onTransitionEnd={isTop ? settle : undefined}
-                  className="[grid-area:1/1] transition-opacity duration-200 starting:opacity-0"
-                >
-                  <ProjectDetail project={layer.project} />
-                </div>
-              )
-            })}
+          <div className={`transition-opacity ${hiding ? 'opacity-0 duration-150' : 'duration-300'}`}>
+            <ProjectDetail project={displayed} />
           </div>
         </aside>
       </div>
