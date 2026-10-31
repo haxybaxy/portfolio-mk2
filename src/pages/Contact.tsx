@@ -1,5 +1,6 @@
 import CopiedToast from "../components/CopiedToast";
 import Reveal from "../components/Reveal";
+import SocialLinks from "../components/SocialLinks";
 import { EMAIL } from "../contact";
 import { useCopyEmail } from "../hooks/useCopyEmail";
 import { LINK, SECTION_TITLE } from "../surface";
@@ -46,6 +47,10 @@ function Contact() {
         </p>
         </Reveal>
         <CopyEmailText />
+        <Reveal className="flex items-center gap-5">
+          <span className="opacity-80">or reach me on</span>
+          <SocialLinks email={false} className="gap-5" />
+        </Reveal>
       </div>
     </div>
   );

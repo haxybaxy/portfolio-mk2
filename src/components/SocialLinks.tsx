@@ -41,12 +41,16 @@ const links: { label: string; href: string; icon: IconName }[] = [
   { label: 'LinkedIn', href: LINKEDIN_URL, icon: 'linkedin' },
 ]
 
-function SocialLinks({ className = '' }: { className?: string }) {
+/** `email` adds the copy-email icon first; Contact leaves it out because the address is already written there */
+/** `className` replaces the default spacing, so pass a gap along with anything else */
+function SocialLinks({ className = 'gap-7', email = true }: { className?: string; email?: boolean }) {
   return (
-    <ul className={`flex items-center gap-7 ${className}`}>
-      <li>
-        <CopyEmailIcon />
-      </li>
+    <ul className={`flex items-center ${className}`}>
+      {email && (
+        <li>
+          <CopyEmailIcon />
+        </li>
+      )}
       {links.map(({ label, href, icon }) => (
         <li key={label}>
           <a href={href} aria-label={label} title={label} target="_blank" rel="noreferrer" className={ITEM}>

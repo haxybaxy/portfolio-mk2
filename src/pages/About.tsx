@@ -1,6 +1,5 @@
 import Peek, { type Card } from "../components/Peek";
 import Reveal from "../components/Reveal";
-import SocialLinks from "../components/SocialLinks";
 import { DOTFILES_URL } from "../contact";
 import {
   blogPosts,
@@ -38,6 +37,13 @@ const PHOTO_COLUMNS = [
   ],
 ];
 
+// Spans both columns under the grid
+const WIDE_PHOTO = {
+  src: "/mountain.webp",
+  caption: "Sunrise at Sierra Nevada",
+  aspect: "aspect-[8/3]",
+};
+
 const LATEST_POSTS = blogPosts.slice(0, 3);
 
 // Hover cards for words in the text. Edit the captions here.
@@ -53,7 +59,7 @@ const CARDS = {
     image: "/projectphotos/skoll.webp",
     caption: "Skoll, an AI go-to-market engineer. My last venture.",
   },
-  ribeye: { image: "/ribeye.webp", caption: "Ribeye steak." },
+  ribeye: { image: "/ribeye.webp", caption: "mmm steak 🤤" },
   chickenLiver: {
     image: "/chicken-liver.webp",
     caption: "mmm chicken liver sandwich 🤤",
@@ -90,7 +96,7 @@ function About() {
             in Madrid, and I currently live there.
           </p>
           <p>
-            I've founded a bunch of companies and scaled them from 0 to serving
+            I've founded a bunch of startups and scaled them from 0 to serving
             enterprise customers. My last venture was{" "}
             <Peek href="https://useskoll.com" card={CARDS.skoll}>
               Skoll
@@ -156,8 +162,10 @@ function About() {
                 ))}
               </div>
             ))}
+            <div className="col-span-2">
+              <Photo photo={WIDE_PHOTO} />
+            </div>
           </div>
-          <SocialLinks className="justify-center" />
         </div>
       </Reveal>
     </div>
