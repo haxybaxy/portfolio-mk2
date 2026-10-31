@@ -37,18 +37,18 @@ function Contact() {
       <div className="flex flex-col gap-5">
         {/* The copy button stays outside the reveal: it renders a fixed toast, which a transformed ancestor would trap */}
         <Reveal className="flex flex-col gap-5">
-        <p className="text-2xl font-bold tracking-tight md:text-3xl">
-          Want to work together?
-        </p>
-        <p className="leading-relaxed opacity-80">
-          If you need someone who can make things happen at any given moment,
-          <br />
-          send me an email at my business address.
-        </p>
+          <p className="text-2xl font-bold tracking-tight md:text-3xl">
+            Want to work together?
+          </p>
+          <p className="leading-relaxed opacity-80">
+            If you need someone who can make things happen at any given moment,
+            <br />
+            send me an email at my business address.
+          </p>
         </Reveal>
         <CopyEmailText />
         <Reveal className="flex items-center gap-5">
-          <span className="opacity-80">or reach me on</span>
+          <span className="opacity-80">or stalk me on</span>
           <SocialLinks email={false} className="gap-5" />
         </Reveal>
       </div>

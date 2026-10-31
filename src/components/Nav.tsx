@@ -10,6 +10,18 @@ const ICON_BUTTON = `pointer-events-auto absolute top-5 z-10 grid size-10 cursor
 const HIDEABLE = 'transition-[opacity,translate] duration-400'
 const HIDDEN =
   '-translate-y-4 opacity-0 pointer-events-none! focus-within:translate-y-0 focus-within:opacity-100 focus-within:pointer-events-auto!'
+/** Desktop only: page-coloured fade with a light blur behind the links, so text scrolling under them stays out of the way */
+const SCRIM =
+  'pointer-events-none absolute inset-x-0 top-0 hidden h-24 bg-bg/85 backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,black_35%,transparent)] md:block'
+const SCRIM_HIDDEN = '-translate-y-4 opacity-0 group-focus-within:translate-y-0 group-focus-within:opacity-100'
+/** Mobile only: frosted pill behind the theme and menu buttons (both size-10 at top-5, right-5 and right-16) */
+const PILL =
+  'pointer-events-none absolute top-4 right-4 h-12 w-23 rounded-full border border-fg/10 bg-bg/80 backdrop-blur-md transition-[opacity,translate] duration-400 md:hidden'
+const PILL_HIDDEN = '-translate-y-4 opacity-0'
+/** Mobile buttons ride along with the pill; a keyboard-focused one comes back on its own */
+const BUTTON_MOTION = 'transition-[opacity,translate,scale] duration-400'
+const BUTTON_HIDDEN_MOBILE =
+  'max-md:pointer-events-none! max-md:-translate-y-4 max-md:opacity-0! max-md:focus-visible:pointer-events-auto! max-md:focus-visible:translate-y-0 max-md:focus-visible:opacity-100!'
 /** Distance to travel in one direction before the nav reacts, so trackpad jitter cannot flicker it */
 const SCROLL_SLACK = 16
 /** Near the top of the page the nav always shows */
@@ -110,7 +122,8 @@ function useHideOnScrollDown() {
 
 const INDICATOR = 'pointer-events-none absolute -bottom-1 h-px bg-fg transition-[left,width,opacity] duration-300'
 
-function ThemeToggle() {
+/** `hiddenOnMobile` hides it with the rest of the mobile cluster; on desktop it always stays */
+function ThemeToggle({ hiddenOnMobile }: { hiddenOnMobile: boolean }) {
   const { dark, toggle } = useTheme()
   const label = dark ? 'Switch to light theme' : 'Switch to dark theme'
 
@@ -120,7 +133,7 @@ function ThemeToggle() {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className={`${ICON_BUTTON} right-16 opacity-70 hover:opacity-100 md:right-5`}
+      className={`${ICON_BUTTON} ${BUTTON_MOTION} right-16 opacity-70 hover:opacity-100 md:right-5 ${hiddenOnMobile ? BUTTON_HIDDEN_MOBILE : ''}`}
     >
       {/* Both icons share one cell and crossfade, inside the page crossfade when the browser has one */}
       <Icon name="sun" className={`size-5 [grid-area:1/1] ${SWAP} ${dark ? '' : 'rotate-90 opacity-0'}`} />
@@ -172,9 +185,10 @@ function DesktopLinks({ items, activeId, hidden }: { items: NavItem[]; activeId:
 
 function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
   const [open, setOpen] = useState(false)
-  const scrolledDown = useHideOnScrollDown()
-  // The open mobile menu needs its close button
-  const hidden = scrolledDown && !open
+  // Scrolling down hides the desktop links and fade, and on phones the whole button pill
+  const hidden = useHideOnScrollDown()
+  // The open menu needs its close button
+  const mobileHidden = hidden && !open
 
   // Lock page scroll and listen for Escape while the mobile menu is open
   useEffect(() => {
@@ -197,10 +211,13 @@ function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
   }, [])
 
   return (
-    <nav className="pointer-events-none fixed inset-x-0 top-0 z-20 flex justify-center p-6 text-sm">
+    <nav className="group pointer-events-none fixed inset-x-0 top-0 z-20 flex justify-center p-6 text-sm">
+      <div aria-hidden="true" className={`${SCRIM} ${HIDEABLE} ${hidden ? SCRIM_HIDDEN : ''}`} />
       <DesktopLinks items={items} activeId={activeId} hidden={hidden} />
 
-      <ThemeToggle />
+      {/* The open menu has its own backdrop, so the pill steps aside */}
+      <div aria-hidden="true" className={`${PILL} ${open || hidden ? PILL_HIDDEN : ''}`} />
+      <ThemeToggle hiddenOnMobile={mobileHidden} />
 
       {/* Mobile: toggle button, stays above the overlay so it doubles as the close button */}
       <button
@@ -209,8 +226,7 @@ function Nav({ items, activeId }: { items: NavItem[]; activeId: string }) {
         aria-expanded={open}
         aria-controls="mobile-menu"
         aria-label={open ? 'Close menu' : 'Open menu'}
-        // Keeps the press scale alongside the hide fade
-        className={`${ICON_BUTTON} right-5 transition-[opacity,translate,scale] duration-400 md:hidden ${hidden ? HIDDEN : ''}`}
+        className={`${ICON_BUTTON} ${BUTTON_MOTION} right-5 md:hidden ${mobileHidden ? BUTTON_HIDDEN_MOBILE : ''}`}
       >
         <Icon name="menu" className={`size-5 [grid-area:1/1] ${SWAP} ${open ? 'rotate-90 opacity-0' : ''}`} />
         <Icon name="close" className={`size-5 [grid-area:1/1] ${SWAP} ${open ? '' : '-rotate-90 opacity-0'}`} />
