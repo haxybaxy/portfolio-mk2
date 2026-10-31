@@ -24,7 +24,6 @@ const PHOTO_COLUMNS = [
 const IMAGES = {
   ieTower: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Madrid_-_CTBA%2C_Torre_Caleido_01.jpg/960px-Madrid_-_CTBA%2C_Torre_Caleido_01.jpg", // File:Madrid - CTBA, Torre Caleido 01.jpg (CC0)
   ribeye: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/The_Food_at_Davids_Kitchen_061.jpg/960px-The_Food_at_Davids_Kitchen_061.jpg", // File:The Food at Davids Kitchen 061.jpg (CC BY-SA 2.0)
-  chickenLiver: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Chicken_Livers.jpg/960px-Chicken_Livers.jpg", // File:Chicken Livers.jpg (CC BY 2.0)
   overheadPress: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Attractive_sporty_woman_doing_overhead_press_in_gym_with_barbell.jpg/960px-Attractive_sporty_woman_doing_overhead_press_in_gym_with_barbell.jpg", // File:Attractive sporty woman doing overhead press in gym with barbell.jpg (CC BY 2.0)
 };
 
@@ -66,7 +65,7 @@ function About() {
               ribeye steaks
             </Peek>
             ,{" "}
-            <Peek href="https://en.wikipedia.org/wiki/Liver_(food)" wiki="Liver_(food)" image={IMAGES.chickenLiver} className="italic">
+            <Peek href="https://en.wikipedia.org/wiki/Liver_(food)" wiki="Liver_(food)" image="/chicken-liver.jpg" tall className="italic">
               chicken liver sandwiches
             </Peek>
             , computers, productivity workflows,{" "}
