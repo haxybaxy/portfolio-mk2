@@ -1,29 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { reducedMotion } from '../motion'
 
+// Same key as the pre-paint script in index.html. Session storage, so a new visit follows the system again.
 const STORAGE_KEY = 'theme'
 const FADE_CLASS = 'theme-fade'
 // On <html> while the crossfade runs, so index.css can give it its own timing
 const VT_CLASS = 'vt-theme'
 const FADE_MS = 450
 
-/** Light/dark toggle backed by the `dark` class on <html>, which index.html sets before first paint */
+const systemQuery = () => window.matchMedia('(prefers-color-scheme: dark)')
+
+/**
+ * Light/dark theme backed by the `dark` class on <html>, which index.html sets before first paint.
+ * Follows the system setting; the toggle overrides it for this tab until the system setting changes.
+ */
 export function useTheme() {
   const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'))
 
-  const toggle = () => {
-    const next = !dark
+  const switchTo = (next: boolean) => {
     const root = document.documentElement
+    if (root.classList.contains('dark') === next) return
     const apply = () => {
       root.classList.toggle('dark', next)
       // Render the icon swap now so it lands inside the same transition as the colour change
       flushSync(() => setDark(next))
-    }
-    try {
-      localStorage.setItem(STORAGE_KEY, next ? 'dark' : 'light')
-    } catch {
-      // Storage can be unavailable (privacy modes); the theme still switches for this visit
     }
 
     if (reducedMotion()) {
@@ -39,6 +40,33 @@ export function useTheme() {
       apply()
       window.setTimeout(() => root.classList.remove(FADE_CLASS), FADE_MS)
     }
+  }
+
+  // A change to the system setting wins over the toggle
+  useEffect(() => {
+    const query = systemQuery()
+    const follow = () => {
+      try {
+        sessionStorage.removeItem(STORAGE_KEY)
+      } catch {
+        // Storage can be unavailable (privacy modes)
+      }
+      switchTo(query.matches)
+    }
+    query.addEventListener('change', follow)
+    return () => query.removeEventListener('change', follow)
+  }, [])
+
+  const toggle = () => {
+    const next = !dark
+    try {
+      // Matching the system again needs no override
+      if (next === systemQuery().matches) sessionStorage.removeItem(STORAGE_KEY)
+      else sessionStorage.setItem(STORAGE_KEY, next ? 'dark' : 'light')
+    } catch {
+      // Storage can be unavailable (privacy modes); the theme still switches for this visit
+    }
+    switchTo(next)
   }
 
   return { dark, toggle }

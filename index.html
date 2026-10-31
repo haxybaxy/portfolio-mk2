@@ -8,10 +8,11 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zaid</title>
-    <!-- Apply the saved or system theme before first paint so there is no flash -->
+    <!-- Follow the system theme before first paint so there is no flash; the toggle only overrides it for this tab -->
     <script>
       try {
-        const stored = localStorage.getItem('theme')
+        localStorage.removeItem('theme') // older builds saved the toggle for good
+        const stored = sessionStorage.getItem('theme')
         const dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
         document.documentElement.classList.toggle('dark', dark)
       } catch {}
