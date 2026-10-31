@@ -90,8 +90,8 @@ function About() {
             in Madrid, and I currently live there.
           </p>
           <p>
-            I've founded and scaled a bunch of companies from 0 to serving B2B
-            customers in production. My last venture was{" "}
+            I've founded a bunch of companies and scaled them from 0 to serving
+            enterprise customers. My last venture was{" "}
             <Peek href="https://useskoll.com" card={CARDS.skoll}>
               Skoll
             </Peek>
