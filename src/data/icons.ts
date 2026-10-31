@@ -45,6 +45,7 @@ const SIMPLE: Record<string, Slug> = {
   opencv: 'opencv',
   ros: 'ros',
   vite: 'vite',
+  webgpu: 'webgpu',
   shell: 'gnubash',
   supabase: 'supabase',
   railway: 'railway',

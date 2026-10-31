@@ -7,7 +7,7 @@ const SLUGS = [
   'fastapi', 'firebase', 'flutter', 'git', 'go', 'lua', 'githubactions', 'gnubash', 'googleanalytics', 'googlecloud', 'html5',
   'huggingface', 'javascript', 'langchain', 'langgraph', 'linux', 'mongodb', 'mysql', 'nestjs', 'nextdotjs',
   'nodedotjs', 'nvidia', 'opencv', 'pandas', 'postgresql', 'python', 'pytorch', 'railway', 'raspberrypi', 'react',
-  'ros', 'scikitlearn', 'sqlite', 'supabase', 'tensorflow', 'terraform', 'typescript', 'vite',
+  'ros', 'scikitlearn', 'sqlite', 'supabase', 'tensorflow', 'terraform', 'typescript', 'vite', 'webgpu',
 ]
 
 const pkg = new URL('../node_modules/simple-icons/', import.meta.url)

@@ -91,6 +91,17 @@ export const projects: Project[] = [
     tech: ["React", "Supabase", "LangChain", "NestJS", "Railway"],
   },
   {
+    title: "WebGPU Galaxy",
+    featured: true,
+    description:
+      "Bachelor's thesis: a real-time N-body galaxy simulator using the Barnes-Hut algorithm, with gravity computed on the GPU through WebGPU compute shaders and an interactive 3D viewer. Up to 100,000 particles with O(N log N) force computation.",
+    imageUrl: "/projectphotos/webgpu-galaxy.png",
+    category: "University Projects",
+    github: "https://github.com/haxybaxy/webgpu-galaxy",
+    link: "https://haxybaxy.github.io/webgpu-galaxy/",
+    tech: ["C++", "WebGPU", "Python", "CMake", "Dear ImGui"],
+  },
+  {
     title: "Distributed Stock Market Prediction",
     description:
       "LSTM Network that syncs its weights across multiple nodes to predict stock prices. Done for High Performance Computing course. I know the video isn't 4K 1440p, I didn't have enough storage space to render with a higher quality 😭.",
