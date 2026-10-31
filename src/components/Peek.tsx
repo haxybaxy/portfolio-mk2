@@ -3,10 +3,19 @@ import { FADE } from '../motion'
 import { LINK } from '../surface'
 
 type Card = { image?: string; caption: string }
-type Props = { href: string; children: ReactNode; className?: string } & (
-  | { wiki: string; card?: undefined }
-  | { card: Card; wiki?: undefined }
-)
+type Props = {
+  href: string
+  children: ReactNode
+  className?: string
+  /** Wikipedia article title: its description becomes the caption, and its lead image the photo unless `image` is given */
+  wiki?: string
+  /** A ready-made card instead of a Wikipedia lookup */
+  card?: Card
+  /** Photo to show in place of the article's lead image */
+  image?: string
+  /** Portrait photos get a taller card */
+  tall?: boolean
+}
 
 const cache = new Map<string, Promise<Card | null>>()
 
@@ -26,7 +35,7 @@ function wikiCard(title: string) {
 }
 
 /** A link that shows a small preview card (photo and caption) while hovered or focused */
-function Peek({ href, children, className = '', wiki, card }: Props) {
+function Peek({ href, children, className = '', wiki, card, image, tall = false }: Props) {
   const [open, setOpen] = useState(false)
   const [resolved, setResolved] = useState<Card | null>(card ?? null)
 
@@ -34,12 +43,12 @@ function Peek({ href, children, className = '', wiki, card }: Props) {
     if (!open || resolved || !wiki) return
     let cancelled = false
     wikiCard(wiki).then((result) => {
-      if (!cancelled && result) setResolved(result)
+      if (!cancelled && result) setResolved({ image: image ?? result.image, caption: result.caption })
     })
     return () => {
       cancelled = true
     }
-  }, [open, resolved, wiki])
+  }, [open, resolved, wiki, image])
 
   return (
     <span className="relative">
@@ -62,7 +71,9 @@ function Peek({ href, children, className = '', wiki, card }: Props) {
           role="tooltip"
           className={`pointer-events-none absolute bottom-full left-1/2 z-30 mb-2 w-56 max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-lg border border-fg/15 bg-bg p-1.5 font-normal not-italic shadow-lg shadow-black/20 ${FADE} starting:translate-y-1 starting:opacity-0`}
         >
-          {resolved.image && <img src={resolved.image} alt="" className="aspect-[16/10] w-full rounded-md object-cover" />}
+          {resolved.image && (
+            <img src={resolved.image} alt="" className={`w-full rounded-md object-cover ${tall ? 'aspect-[4/5]' : 'aspect-[16/10]'}`} />
+          )}
           <span className="block px-1 pt-1.5 pb-0.5 text-xs leading-snug opacity-80">{resolved.caption}</span>
         </span>
       )}
